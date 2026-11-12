@@ -340,6 +340,22 @@ const GROUPED_OPCODES: { name: string; doc: string; ops: { [key: string]: OpName
     },
   },
   {
+    name: 'TimeTravel',
+    doc: 'Move reads to a past round, or find when state changed. dt-algorand only: these ops run only in its POST /v2/query, and simulate and blocks refuse a program with them',
+    ops: {
+      tt_seek: { nameOverride: 'seek' },
+      tt_acct_change: { nameOverride: 'acct_change' },
+      tt_holding_change: { nameOverride: 'holding_change' },
+      tt_local_change: { nameOverride: 'local_change' },
+      tt_asset_change: { nameOverride: 'asset_change' },
+      tt_app_change: { nameOverride: 'app_change' },
+      tt_box_change: { nameOverride: 'box_change' },
+      tt_global_key_change: { nameOverride: 'global_key_change' },
+      tt_local_key_change: { nameOverride: 'local_key_change' },
+      tt_box_prefix_change: { nameOverride: 'box_prefix_change' },
+    },
+  },
+  {
     name: 'EllipticCurve',
     doc: 'Elliptic Curve functions',
     ops: {
@@ -741,5 +757,14 @@ const getOpDocs = (op: Op): string[] => [
         .map((s) => s.trimEnd()),
     )
     .flat(),
-  `@see Native TEAL opcode: [\`${op.name}\`](https://dev.algorand.co/reference/algorand-teal/opcodes#${op.name})`,
+  `@see Native TEAL opcode: [\`${op.name}\`](${getOpDocUrl(op.name)})`,
 ]
+
+// the time-travel ops are dt-algorand's, and documented there rather than in the AVM's docs
+const TIME_TRAVEL_DOC_URL = 'https://github.com/d13co/dt-algorand/blob/dtalgorand/ledger/timetravel/README.md'
+
+const getOpDocUrl = (name: string): string => {
+  if (name === 'tt_seek') return `${TIME_TRAVEL_DOC_URL}#time-travel-inside-a-call`
+  if (name.startsWith('tt_')) return `${TIME_TRAVEL_DOC_URL}#when-state-changed`
+  return `https://dev.algorand.co/reference/algorand-teal/opcodes#${name}`
+}

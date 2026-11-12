@@ -1,0 +1,219 @@
+name: dt-puya-ts
+
+# CI for the dtalgorand branch, and the npm release of @d13co/dt-puya-ts and
+# @d13co/dt-algorand-typescript: pushing a v<version> tag (v1.3.1-dt.1.0.0) on dtalgorand tests,
+# packs and publishes both. See "Releasing dt-puya-ts" in DTPUYATS.md.
+on:
+  push:
+    branches: [dtalgorand]
+    tags: ['v*-dt.*']
+  pull_request:
+    branches: [dtalgorand]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dt-puya-ts-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+jobs:
+  test:
+    name: Test (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 22 is the oldest in `engines`; the 24 run packs the release
+        node: [22.x, 24.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+
+      - name: Check the tag is on dtalgorand
+        if: github.ref_type == 'tag'
+        run: |
+          git fetch --quiet origin dtalgorand
+          git merge-base --is-ancestor "$GITHUB_SHA" FETCH_HEAD || {
+            echo "::error::$GITHUB_REF_NAME is not on dtalgorand"
+            exit 1
+          }
+
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            packages/algo-ts/package-lock.json
+
+      # Needs no install, so a mistagged release fails before the tests
+      - name: Check the versions in the packages, the lockfiles, the docs and the tag
+        env:
+          TAG: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+        run: node scripts/ci/dt-release.mjs check "$TAG"
+
+      # The compiler downloads this release's binary on first use, as the tests do
+      - name: Check the targeted dt-puya release is published
+        run: |
+          repo=$(grep -oP "puyaGithubRepo\s*:\s*'\K[^']+" src/constants.ts)
+          version=$(grep -oP "targetedPuyaVersion\s*:\s*'\K[^']+" src/constants.ts)
+          url="https://github.com/$repo/releases/download/v$version/puya-$version-linux_x64.sha256.txt"
+          curl -fsSL -o /dev/null "$url" || {
+            echo "::error::$url is not there: release dt-puya $version first"
+            exit 1
+          }
+
+      # Lints, type-checks and builds packages/algo-ts/dist, which the root package installs
+      - name: Build @d13co/dt-algorand-typescript
+        working-directory: packages/algo-ts
+        run: npm ci --ignore-scripts && npm run build
+
+      # --ignore-scripts skips the postinstall, which rebuilds algo-ts with lint fixes
+      - name: Install dependencies
+        run: npm ci --ignore-scripts && npm rebuild
+
+      - name: Install algokit
+        run: pipx install algokit
+
+      - name: Start LocalNet
+        run: algokit localnet start
+
+      - name: Check generated code
+        run: npm run script:code-gen && git diff --exit-code
+
+      # Blocking: the dependencies the published packages install
+      - name: Audit production dependencies
+        run: npm run audit -- -p && (cd packages/algo-ts && npm run audit -- -p)
+
+      # Advisory: dev tooling often has advisories that don't reach the packages
+      - name: Audit all dependencies
+        continue-on-error: true
+        run: npm run audit && (cd packages/algo-ts && npm run audit)
+
+      # Lints, type-checks and builds dist/
+      - name: Build @d13co/dt-puya-ts
+        run: npm run build
+
+      - name: Test
+        run: npm test
+
+      # dist/ names algorand-typescript by its upstream name, as file:packages/algo-ts/dist;
+      # the published package installs it from npm under that name, so that the contracts'
+      # imports of @algorandfoundation/algorand-typescript find it
+      - name: Pack
+        if: github.ref_type == 'tag' && matrix.node == '24.x'
+        run: |
+          version=$(node -p 'require("./package.json").version')
+          (cd dist && npm pkg set "dependencies.@algorandfoundation/algorand-typescript=npm:@d13co/dt-algorand-typescript@$version")
+          npm pack ./packages/algo-ts/dist
+          npm pack ./dist
+
+      - name: Upload packages
+        if: github.ref_type == 'tag' && matrix.node == '24.x'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: packages
+          path: |
+            d13co-dt-algorand-typescript-*.tgz
+            d13co-dt-puya-ts-*.tgz
+          if-no-files-found: error
+
+  publish:
+    name: Publish to npm
+    needs: test
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    # One publish at a time across tags, so the last tag pushed is the one `latest` ends on
+    concurrency:
+      group: npm-publish
+      cancel-in-progress: false
+    # The trusted publishers on npmjs.com name this environment. Its required reviewers
+    # approve each release, and its deployment policy admits only v*-dt.* tags.
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/@d13co/dt-puya-ts/v/${{ steps.version.outputs.version }}
+    permissions:
+      contents: write # GitHub release
+      id-token: write # npm trusted publishing
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 24.x
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 24.x
+          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing (OIDC) needs npm 11.5.1 or later
+      - name: Check npm version
+        run: |
+          node -e '
+            const [a, b, c] = process.argv[1].split(".").map(Number);
+            if (a > 11 || (a === 11 && (b > 5 || (b === 5 && c >= 1)))) process.exit(0);
+            console.error("::error::npm " + process.argv[1] + " is older than 11.5.1, which trusted publishing needs");
+            process.exit(1);
+          ' "$(npm -v)"
+
+      - name: Read version
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Download packages
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: packages
+          path: package
+
+      # Authenticates with npm trusted publishing (OIDC), which also adds provenance; there is
+      # no token. algorand-typescript goes first: dt-puya-ts depends on it. The versions are
+      # prereleases, and npm 11 publishes a prerelease only with an explicit --tag. The ./
+      # matters: npm reads package/<file>.tgz as the GitHub repository package/<file>.tgz.
+      # A version already on npm (the first one, published by hand) is not published again,
+      # and the GitHub release gets npm's tarball in place of the rebuilt one;
+      # --min-release-age=0 overrides the .npmrc delay for a version just published.
+      - name: Publish
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          for name in dt-algorand-typescript dt-puya-ts; do
+            file="package/d13co-$name-$VERSION.tgz"
+            if npm view "@d13co/$name@$VERSION" version >/dev/null 2>&1; then
+              echo "::notice::@d13co/$name@$VERSION is already on npm, not publishing it again"
+              rm "$file"
+              npm pack "@d13co/$name@$VERSION" --min-release-age=0 --pack-destination package
+            else
+              npm publish "./$file" --tag latest --access public
+            fi
+          done
+
+      - name: Create GitHub release
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "::notice::The $GITHUB_REF_NAME release already exists"
+            exit 0
+          fi
+          {
+            echo "npm: [@d13co/dt-puya-ts@$VERSION](https://www.npmjs.com/package/@d13co/dt-puya-ts/v/$VERSION) and [@d13co/dt-algorand-typescript@$VERSION](https://www.npmjs.com/package/@d13co/dt-algorand-typescript/v/$VERSION). Install them as described in the [README](https://github.com/$GITHUB_REPOSITORY/blob/$GITHUB_REF_NAME/README.md#installing-dt-puya-ts); the changes from puya-ts are in [DTPUYATS.md](https://github.com/$GITHUB_REPOSITORY/blob/$GITHUB_REF_NAME/DTPUYATS.md)."
+            prev=$(git describe --tags --abbrev=0 --match 'v*-dt.*' "$GITHUB_REF_NAME^" 2>/dev/null || true)
+            if [ -n "$prev" ]; then
+              echo
+              echo "## Changes since $prev"
+              echo
+              git log --first-parent --format='- %s (%h)' "$prev..$GITHUB_REF_NAME"
+            fi
+          } > notes.md
+          gh release create "$GITHUB_REF_NAME" \
+            "package/d13co-dt-puya-ts-$VERSION.tgz" \
+            "package/d13co-dt-algorand-typescript-$VERSION.tgz" \
+            --verify-tag --latest --title "@d13co/dt-puya-ts $VERSION" --notes-file notes.md

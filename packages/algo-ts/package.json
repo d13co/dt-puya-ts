@@ -1,13 +1,21 @@
 {
-  "name": "@algorandfoundation/algorand-typescript",
-  "version": "1.0.0",
-  "description": "This package contains definitions for the types which comprise Algorand TypeScript which can be compiled to run on the Algorand Virtual Machine using the Puya compiler.",
+  "name": "@d13co/dt-algorand-typescript",
+  "version": "1.3.1-dt.1.0.0",
+  "description": "Fork of @algorandfoundation/algorand-typescript for dt-algorand, the time-travel fork of go-algorand: the types of Algorand TypeScript, compiled by dt-puya-ts",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/algorandfoundation/puya-ts.git",
+    "url": "git+https://github.com/d13co/dt-puya-ts.git",
     "directory": "packages/algo-ts"
   },
+  "homepage": "https://github.com/d13co/dt-puya-ts/tree/dtalgorand/packages/algo-ts#readme",
+  "bugs": {
+    "url": "https://github.com/d13co/dt-puya-ts/issues"
+  },
+  "author": "Bit D13 <bit@d13.co>",
+  "contributors": [
+    "Algorand Foundation"
+  ],
   "main": "index.js",
   "types": "src/index.ts",
   "engines": {

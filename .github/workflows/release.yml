@@ -16,7 +16,7 @@ permissions:
 jobs:
   check-puya:
     name: 'Check puya dependency'
-    if: github.ref_name == 'release'
+    if: github.repository == 'algorandfoundation/puya-ts' && github.ref_name == 'release' # forks release with dt-puya-ts.yml
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -33,7 +33,7 @@ jobs:
   ci:
     name: Build and test
     needs: check-puya
-    if: ${{ !failure() && !cancelled() }}
+    if: ${{ github.repository == 'algorandfoundation/puya-ts' && !failure() && !cancelled() }} # forks release with dt-puya-ts.yml
     uses: ./.github/workflows/ci-all.yml
     with:
       run-commit-lint: false

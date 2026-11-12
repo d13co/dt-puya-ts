@@ -8,6 +8,7 @@ permissions:
 
 jobs:
   prod_release:
+    if: github.repository == 'algorandfoundation/puya-ts' # forks release with dt-puya-ts.yml
     runs-on: ubuntu-latest
     steps:
       - name: Generate bot token

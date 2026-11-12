@@ -2,6 +2,7 @@ import { Constants } from '../constants'
 import { logger } from '../logger'
 import { runPuya } from './run-puya'
 import type { SemVer } from './semver'
+import { parseSemVer } from './semver'
 
 enum VersionCompareVerdict {
   ExactMatch = 'ExactMatch',
@@ -10,6 +11,7 @@ enum VersionCompareVerdict {
   MinorMismatch = 'MinorMismatch',
   OlderRevision = 'OlderRevision',
   NewerRevision = 'NewerRevision',
+  SuffixMismatch = 'SuffixMismatch',
 }
 
 async function comparePuyaVersion(puyaPath: string): Promise<{
@@ -30,11 +32,14 @@ async function comparePuyaVersion(puyaPath: string): Promise<{
   const ver = versionParser.version
 
   // Compare
-  const [major, minor, rev] = target.split('.').map((x) => Number(x))
+  const { major, minor, rev, suffix } = parseSemVer(target)
   if (ver.major !== major) return { verdict: VersionCompareVerdict.MajorMismatch, target, found: ver.formatted }
   if (ver.minor !== minor) return { verdict: VersionCompareVerdict.MinorMismatch, target, found: ver.formatted }
   if (ver.rev < rev) return { verdict: VersionCompareVerdict.OlderRevision, target, found: ver.formatted }
   if (ver.rev > rev) return { verdict: VersionCompareVerdict.NewerRevision, target, found: ver.formatted }
+  // dt-puya-ts targets a dt-puya release (5.10.1-dt.1.0.0): a puya without the same suffix
+  // may lack the ops dt-puya adds
+  if (ver.suffix !== suffix) return { verdict: VersionCompareVerdict.SuffixMismatch, target, found: ver.formatted }
   return { verdict: VersionCompareVerdict.ExactMatch, target, found: ver.formatted }
 }
 
@@ -47,6 +52,7 @@ export async function checkPuyaVersion(puyaPath: string) {
       break
     case VersionCompareVerdict.MajorMismatch:
     case VersionCompareVerdict.MinorMismatch:
+    case VersionCompareVerdict.SuffixMismatch:
       logger.warn(
         undefined,
         `Version of Puya at ${puyaPath} (${result.found}) does not match targeted version (${result.target}). There may be compatibility issues.`,

@@ -62,12 +62,12 @@ if (mode === 'update') {
     const lock = readJson(join(dir, 'package-lock.json'))
     if (pkg.name !== name) errors.push(`${dir}/package.json name is ${pkg.name}, not ${name}`)
     if (pkg.version !== version) errors.push(`${dir}/package.json version ${pkg.version} is not ${version}`)
-    if (lock.name !== name || lock.packages[''].name !== name) errors.push(`${dir}/package-lock.json name is ${lock.name}, not ${name}`)
-    if (lock.version !== version || lock.packages[''].version !== version)
+    if (lock.name !== name || lock.packages?.['']?.name !== name) errors.push(`${dir}/package-lock.json name is ${lock.name}, not ${name}`)
+    if (lock.version !== version || lock.packages?.['']?.version !== version)
       errors.push(`${dir}/package-lock.json version ${lock.version} is not ${version}`)
   }
   // The root lockfile records the version of the linked packages/algo-ts/dist
-  const linked = readJson('package-lock.json').packages['packages/algo-ts/dist']
+  const linked = readJson('package-lock.json').packages?.['packages/algo-ts/dist']
   if (linked?.name !== PACKAGES[1].name || linked?.version !== version)
     errors.push(`package-lock.json has packages/algo-ts/dist as ${linked?.name}@${linked?.version}, not ${PACKAGES[1].name}@${version}`)
   if (tag && tag !== `v${version}`) errors.push(`tag ${tag} is not v${version}`)

@@ -35,7 +35,7 @@ dt-algorand's `POST /v2/query` runs read-only calls of a program or app at past 
 | `localKeyChangeBytes` / `Uint64(account, app, key, from, to)` | `tt_local_key_change`  | `[round, status, value]` of a local state key                          |
 | `boxPrefixChange(app, prefix, from, to)`                      | `tt_box_prefix_change` | `[round, status, name]` of the first box under a name prefix to change |
 
-The lookups search the rounds from `from` to `to`, both included: oldest first when `from <= to`, newest first otherwise. The status is 0 for no change, 1 created, 2 changed, 3 deleted. The TSDoc of each method has its cost and failure cases, and [dt-algorand's time-travel docs](https://github.com/d13co/dt-algorand/blob/dtalgorand/ledger/timetravel/README.md) the details.
+The lookups search the rounds from `from` to `to`, both included: oldest first when `from <= to`, newest first otherwise. The status is 0 for no change, 1 created, 2 changed, 3 deleted. The key and box prefix lookups read at most a set amount of history per search: when they stop there, the status is 4 and the round is where to resume the search from. The value of the key lookups is 0 when the key didn't change or was deleted, also for `*KeyChangeBytes`, so check the status before using it as bytes. The TSDoc of each method has its cost and failure cases, and [dt-algorand's time-travel docs](https://github.com/d13co/dt-algorand/blob/dtalgorand/ledger/timetravel/README.md) the details.
 
 ```ts
 import type { uint64 } from '@algorandfoundation/algorand-typescript'
@@ -46,12 +46,12 @@ export class History extends Contract {
   @readonly
   roundAt(rnd: uint64): uint64 {
     op.TimeTravel.seek(rnd)
-    return Global.round
+    return Global.round // rnd + 1
   }
 }
 ```
 
-After a seek, a program reads the state of the round it sought: global, local and box state, `Global.round` and `Global.latestTimestamp`. In a program that seeks, dt-puya's optimizer keeps reads on their side of the seek. A program without `tt_seek` compiles as before.
+After a seek to a round, a program reads the ledger as it was at the end of that round, as if it ran in the next block: global, local and box state, balances, holdings, and account, asset and app params. `Global.round` is the round after it and `Global.latestTimestamp` its timestamp, and the txns of the program's group read the round after it as their `FirstValid` and `LastValid`, and its timestamp as `FirstValidTime`. In a program that seeks, dt-puya's optimizer keeps reads on their side of the seek, and of calls that may seek. A program without `tt_seek` compiles as before.
 
 `algorand-typescript-testing` (the off-chain test runner) doesn't know these ops; test contracts that use them with a query on a dt-algorand node.
 
@@ -76,7 +76,7 @@ GitHub Actions publishes both packages, with [`.github/workflows/dt-puya-ts.yml`
 2. Choose the version (see [Versions](#versions)), and set it in both packages: `npm version <version> --no-git-tag-version` at the root and in `packages/algo-ts`, then `npm install` at the root, which records the linked `packages/algo-ts/dist` in `package-lock.json` (run `npm run algo-ts` first if `dist` is stale).
 3. `node scripts/ci/dt-release.mjs update`: it sets the versions in the install snippets and the dt-puya version in `README.md` and in this file.
 4. `npm test`, then `npm run build` and `npm pack --dry-run ./dist` to check the contents.
-5. Commit and push `dtalgorand`, then tag the commit and push the tag: `git tag v<version>` and `git push d13co v<version>`.
+5. Merge to `dtalgorand` (through a pull request), then tag the merge commit and push the tag: `git tag v<version>` and `git push <remote> v<version>`.
 6. The workflow checks that the tag is on `dtalgorand` and matches the versions in both `package.json` and `package-lock.json` files, and that the docs name that version and the targeted dt-puya (`node scripts/ci/dt-release.mjs check v<version>` runs the same check locally). In `dist/package.json`, it points the `@algorandfoundation/algorand-typescript` dependency at `npm:@d13co/dt-algorand-typescript@<version>`. After the tests, the `publish` job waits for approval, then publishes `@d13co/dt-algorand-typescript` and then `@d13co/dt-puya-ts` with `npm publish --tag latest`: npm 11 publishes a prerelease only with an explicit tag, and `latest` makes it the version `npm install` gets. A version already on npm is not published again.
 
 ### One-time setup

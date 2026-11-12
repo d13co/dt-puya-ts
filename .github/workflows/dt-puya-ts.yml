@@ -199,8 +199,11 @@ jobs:
           VERSION: ${{ steps.version.outputs.version }}
           GH_TOKEN: ${{ github.token }}
         run: |
+          files=("package/d13co-dt-puya-ts-$VERSION.tgz" "package/d13co-dt-algorand-typescript-$VERSION.tgz")
+          # A rerun, after a release whose upload failed, uploads the files again
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            echo "::notice::The $GITHUB_REF_NAME release already exists"
+            echo "::notice::The $GITHUB_REF_NAME release already exists, uploading its files again"
+            gh release upload "$GITHUB_REF_NAME" "${files[@]}" --clobber
             exit 0
           fi
           {
@@ -213,7 +216,5 @@ jobs:
               git log --first-parent --format='- %s (%h)' "$prev..$GITHUB_REF_NAME"
             fi
           } > notes.md
-          gh release create "$GITHUB_REF_NAME" \
-            "package/d13co-dt-puya-ts-$VERSION.tgz" \
-            "package/d13co-dt-algorand-typescript-$VERSION.tgz" \
+          gh release create "$GITHUB_REF_NAME" "${files[@]}" \
             --verify-tag --latest --title "@d13co/dt-puya-ts $VERSION" --notes-file notes.md

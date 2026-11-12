@@ -1,0 +1,156 @@
+contract TimeTravelContract
+{
+  globals {
+    ["counter"]: uint64
+  }
+  boxes {
+    ["data"]: bytes
+    ["items"]: arc4.dynamic_array<uint64>
+    ["pt"]: tests/approvals/time-travel.algo.ts::Point
+  }
+  approvalProgram(): bool
+  {
+    if (!Boolean(txn<ApplicationID>())) {
+      this.constructor()
+    }
+    return arc4Router()
+  }
+  
+  clearProgram(): bool
+  {
+    return True
+  }
+  
+  roundAt(rnd: uint64): uint64
+  {
+    tt_seek(rnd)
+    return global<Round>()
+  }
+  
+  roundBefore(rnd: uint64): uint64
+  {
+    before: uint64 = global<Round>()
+    tt_seek(rnd)
+    return before
+  }
+  
+  counterThenAndNow(rnd: uint64): arc4.tuple<uint64,uint64>
+  {
+    home: uint64 = global<Round>() - 1
+    now: uint64 = GlobalState["counter"]
+    tt_seek(rnd)
+    then: uint64 = GlobalState["counter"]
+    tt_seek(home)
+    return ARC4_ENCODE(#[then, now], wtype=arc4.tuple<uint64,uint64>)
+  }
+  
+  dataChanged(rnd: uint64): bool
+  {
+    now: bytes = Box["data"].value
+    tt_seek(rnd)
+    then: bytes = Box["data"].value
+    return now.slice(0, 8) != then.slice(0, 8)
+  }
+  
+  firstItemChanged(rnd: uint64): bool
+  {
+    now: arc4.dynamic_array<uint64> = copy(Box["items"].value)
+    tests/approvals/time-travel.algo.ts::goBack(rnd)
+    then: arc4.dynamic_array<uint64> = copy(Box["items"].value)
+    return now[0] != then[0]
+  }
+  
+  firstItemNow(rnd: uint64): uint64
+  {
+    first: uint64 = Box["items"].value[0]
+    tt_seek(rnd)
+    return first
+  }
+  
+  appendThenWriteBack(rnd: uint64, x: uint64): void
+  {
+    items: arc4.dynamic_array<uint64> = copy(Box["items"].value)
+    items.push(...#[x]), items.length
+    tt_seek(rnd)
+    Box["items"].value: arc4.dynamic_array<uint64> = copy(items)
+  }
+  
+  setThenWriteBack(rnd: uint64, x: uint64): void
+  {
+    point: tests/approvals/time-travel.algo.ts::Point = copy(Box["pt"].value)
+    point.a: uint64 = x
+    tt_seek(rnd)
+    Box["pt"].value: tests/approvals/time-travel.algo.ts::Point = copy(point)
+  }
+  
+  timestamps(rnd: uint64, of: uint64): uint64
+  {
+    now: uint64 = block<BlkTimestamp>(of)
+    tt_seek(rnd)
+    then: uint64 = block<BlkTimestamp>(of)
+    return now + then
+  }
+  
+  dataExisted(rnd: uint64): bytes
+  {
+    existed: bool = STATE_EXISTS(Box["data"].value)
+    tt_seek(rnd)
+    then: bytes = Box["data"].value
+    assert(existed)
+    return then
+  }
+  
+  dataExistsThen(rnd: uint64): bool
+  {
+    assert(Boolean(checked_maybe(box_len("data"), comment=Box must have value)))
+    tt_seek(rnd)
+    return STATE_EXISTS(Box["data"].value)
+  }
+  
+  changes(acct: account, asset: asset, app: application, from: uint64, to: uint64): uint64
+  {
+    total: uint64 = 0
+    #[rnd, status]: readonly [uint64, uint64] = #[($0 = tt_acct_change(acct, from, to)).0, $0.1]
+    total: uint64 = total + rnd + status
+    #[rnd, status]: readonly [uint64, uint64] = #[($1 = tt_holding_change(acct, asset, from, to)).0, $1.1]
+    total: uint64 = total + rnd + status
+    #[rnd, status]: readonly [uint64, uint64] = #[($2 = tt_local_change(acct, app, from, to)).0, $2.1]
+    total: uint64 = total + rnd + status
+    #[rnd, status]: readonly [uint64, uint64] = #[($3 = tt_asset_change(asset, from, to)).0, $3.1]
+    total: uint64 = total + rnd + status
+    #[rnd, status]: readonly [uint64, uint64] = #[($4 = tt_app_change(app, from, to)).0, $4.1]
+    total: uint64 = total + rnd + status
+    #[rnd, status]: readonly [uint64, uint64] = #[($5 = tt_box_change(app, "data", from, to)).0, $5.1]
+    total: uint64 = total + rnd + status
+    #[gRnd, gStatus, gValue]: readonly [uint64, uint64, uint64] = #[($6 = tt_global_key_change(app, "counter", from, to)).0, $6.1, $6.2]
+    total: uint64 = total + gRnd + gStatus + gValue
+    #[nRnd, nStatus, nName]: readonly [uint64, uint64, bytes] = #[($7 = tt_global_key_change(app, "name", from, to)).0, $7.1, $7.2]
+    total: uint64 = total + nRnd + nStatus + len(nName)
+    #[lRnd, lStatus, lValue]: readonly [uint64, uint64, uint64] = #[($8 = tt_local_key_change(acct, app, "n", from, to)).0, $8.1, $8.2]
+    total: uint64 = total + lRnd + lStatus + lValue
+    #[sRnd, sStatus, sValue]: readonly [uint64, uint64, bytes] = #[($9 = tt_local_key_change(acct, app, "s", from, to)).0, $9.1, $9.2]
+    total: uint64 = total + sRnd + sStatus + len(sValue)
+    #[pRnd, pStatus, pName]: readonly [uint64, uint64, bytes] = #[($10 = tt_box_prefix_change(app, "it", from, to)).0, $10.1, $10.2]
+    total: uint64 = total + pRnd + pStatus + len(pName)
+    return total
+  }
+  
+  __algots__.defaultCreate(): void
+  {
+  }
+  
+  constructor(): void
+  {
+    super.constructor()
+    GlobalState["counter"]: uint64 = 0
+  }
+  
+  BaseContract::constructor(): void
+  {
+  }
+  
+}
+subroutine goBack(rnd: uint64): void
+{
+  tt_seek(rnd)
+}

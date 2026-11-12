@@ -1,20 +1,59 @@
 # dt-puya-ts: differences from puya-ts
 
-`@d13co/dt-puya-ts` and `@d13co/dt-algorand-typescript` are [puya-ts](https://github.com/algorandfoundation/puya-ts) 1.3.1 and its Algorand TypeScript types, for [dt-algorand](https://github.com/d13co/dt-algorand/tree/dtalgorand), the time-travel fork of go-algorand. The compiler runs [dt-puya](https://github.com/d13co/dt-puya), the matching fork of the puya backend, which it downloads from dt-puya's releases. Everything else is upstream's: contracts that compile with puya-ts compile with dt-puya-ts to the same output.
+`@d13co/dt-puya-ts` and `@d13co/dt-algorand-typescript` are [puya-ts](https://github.com/algorandfoundation/puya-ts) 1.3.1 and its Algorand TypeScript types, for [dt-algorand](https://github.com/d13co/dt-algorand/tree/dtalgorand), the time-travel fork of go-algorand, with its time-travel ops. The compiler runs [dt-puya](https://github.com/d13co/dt-puya), the matching fork of the puya backend, which it downloads from dt-puya's releases. Everything else is upstream's: contracts that compile with puya-ts, and so use no time-travel op, compile with dt-puya-ts to the same output.
 
 Source and issues: [d13co/dt-puya-ts](https://github.com/d13co/dt-puya-ts) (branch `dtalgorand`).
 
 - [Changes](#changes)
+- [Time-travel ops](#time-travel-ops)
 - [Installing](#installing)
 - [Versions](#versions)
 - [Releasing dt-puya-ts](#releasing-dt-puya-ts)
 
 ## Changes
 
-| Area         | puya-ts                                                                  | dt-puya-ts                                                                                                             |
-| ------------ | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| puya backend | puya, from algorandfoundation/puya releases                              | dt-puya 5.10.1-dt.1.0.0, from [d13co/dt-puya releases](https://github.com/d13co/dt-puya/releases/tag/v5.10.1-dt.1.0.0) |
-| npm packages | `@algorandfoundation/puya-ts`, `@algorandfoundation/algorand-typescript` | `@d13co/dt-puya-ts`, `@d13co/dt-algorand-typescript`, installed under the upstream names                               |
+| Area            | puya-ts                                                                  | dt-puya-ts                                                                                                             |
+| --------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| Time-travel ops | none                                                                     | `op.TimeTravel`, see [Time-travel ops](#time-travel-ops)                                                               |
+| puya backend    | puya, from algorandfoundation/puya releases                              | dt-puya 5.10.1-dt.1.0.0, from [d13co/dt-puya releases](https://github.com/d13co/dt-puya/releases/tag/v5.10.1-dt.1.0.0) |
+| npm packages    | `@algorandfoundation/puya-ts`, `@algorandfoundation/algorand-typescript` | `@d13co/dt-puya-ts`, `@d13co/dt-algorand-typescript`, installed under the upstream names                               |
+
+## Time-travel ops
+
+dt-algorand's `POST /v2/query` runs read-only calls of a program or app at past rounds. It also runs ten ops that aren't part of the chain's AVM (prefix byte `0xff`, AVM 13, app mode only): `tt_seek` moves a program's reads to a past round, and the `tt_*_change` lookups find when state changed. Simulate and blocks refuse a program that uses them, so a contract that uses them is for queries only. dt-puya-ts has them as `op.TimeTravel`:
+
+| Method                                                        | Op                     | Returns                                                                |
+| ------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------------------- |
+| `seek(round)`                                                 | `tt_seek`              | nothing: reads after it see the state at the end of `round`            |
+| `acctChange(account, from, to)`                               | `tt_acct_change`       | `[round, status]` of the first change of the account's base record     |
+| `holdingChange(account, asset, from, to)`                     | `tt_holding_change`    | `[round, status]` of an asset holding                                  |
+| `localChange(account, app, from, to)`                         | `tt_local_change`      | `[round, status]` of an app's local state                              |
+| `assetChange(asset, from, to)`                                | `tt_asset_change`      | `[round, status]` of an asset's params                                 |
+| `appChange(app, from, to)`                                    | `tt_app_change`        | `[round, status]` of an app's params                                   |
+| `boxChange(app, name, from, to)`                              | `tt_box_change`        | `[round, status]` of a box                                             |
+| `globalKeyChangeBytes` / `Uint64(app, key, from, to)`         | `tt_global_key_change` | `[round, status, value]` of a global state key                         |
+| `localKeyChangeBytes` / `Uint64(account, app, key, from, to)` | `tt_local_key_change`  | `[round, status, value]` of a local state key                          |
+| `boxPrefixChange(app, prefix, from, to)`                      | `tt_box_prefix_change` | `[round, status, name]` of the first box under a name prefix to change |
+
+The lookups search the rounds from `from` to `to`, both included: oldest first when `from <= to`, newest first otherwise. The status is 0 for no change, 1 created, 2 changed, 3 deleted. The TSDoc of each method has its cost and failure cases, and [dt-algorand's time-travel docs](https://github.com/d13co/dt-algorand/blob/dtalgorand/ledger/timetravel/README.md) the details.
+
+```ts
+import type { uint64 } from '@algorandfoundation/algorand-typescript'
+import { Contract, contract, Global, op, readonly } from '@algorandfoundation/algorand-typescript'
+
+@contract({ avmVersion: 13 })
+export class History extends Contract {
+  @readonly
+  roundAt(rnd: uint64): uint64 {
+    op.TimeTravel.seek(rnd)
+    return Global.round
+  }
+}
+```
+
+After a seek, a program reads the state of the round it sought: global, local and box state, `Global.round` and `Global.latestTimestamp`. In a program that seeks, dt-puya's optimizer keeps reads on their side of the seek. A program without `tt_seek` compiles as before.
+
+`algorand-typescript-testing` (the off-chain test runner) doesn't know these ops; test contracts that use them with a query on a dt-algorand node.
 
 ## Installing
 

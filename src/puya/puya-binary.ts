@@ -20,8 +20,10 @@ function getBinaryName(): string {
 }
 
 function getPuyaTsDir(): string {
-  // dt-puya-ts is installed under the upstream name (an npm alias), or under its own
-  for (const name of ['@algorandfoundation/puya-ts', '@d13co/dt-puya-ts']) {
+  // dt-puya-ts is installed under its own name, or under the upstream name (an npm alias). Its own
+  // name comes first: when it resolves, the upstream name may be a real puya-ts, whose directory
+  // is not ours to cache dt-puya in
+  for (const name of ['@d13co/dt-puya-ts', '@algorandfoundation/puya-ts']) {
     try {
       return pathe.dirname(require.resolve(name))
     } catch {

@@ -3813,7 +3813,7 @@
           "source_location": {
             "file": "tests/approvals/time-travel.algo.ts",
             "line": 95,
-            "end_line": 120,
+            "end_line": 124,
             "column": 91,
             "end_column": 3
           },
@@ -6274,7 +6274,7 @@
                 "line": 112,
                 "end_line": 112,
                 "column": 4,
-                "end_column": 42
+                "end_column": 27
               },
               "target": {
                 "_$%!#ID": 413,
@@ -6299,7 +6299,7 @@
                   "line": 112,
                   "end_line": 112,
                   "column": 4,
-                  "end_column": 42
+                  "end_column": 27
                 },
                 "left": {
                   "_$%!#REF": 413
@@ -6313,109 +6313,263 @@
                     "line": 112,
                     "end_line": 112,
                     "column": 13,
-                    "end_column": 42
+                    "end_column": 27
                   },
                   "left": {
                     "_$%!#ID": 416,
-                    "_type": "UInt64BinaryOperation",
+                    "_type": "VarExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
                       "line": 112,
                       "end_line": 112,
                       "column": 13,
-                      "end_column": 27
-                    },
-                    "left": {
-                      "_$%!#ID": 417,
-                      "_type": "VarExpression",
-                      "source_location": {
-                        "file": "tests/approvals/time-travel.algo.ts",
-                        "line": 112,
-                        "end_line": 112,
-                        "column": 13,
-                        "end_column": 17
-                      },
-                      "wtype": {
-                        "_$%!#REF": 8
-                      },
-                      "name": "nRnd"
-                    },
-                    "op": "+",
-                    "right": {
-                      "_$%!#ID": 418,
-                      "_type": "VarExpression",
-                      "source_location": {
-                        "file": "tests/approvals/time-travel.algo.ts",
-                        "line": 112,
-                        "end_line": 112,
-                        "column": 20,
-                        "end_column": 27
-                      },
-                      "wtype": {
-                        "_$%!#REF": 8
-                      },
-                      "name": "nStatus"
-                    }
-                  },
-                  "op": "+",
-                  "right": {
-                    "_$%!#ID": 419,
-                    "_type": "IntrinsicCall",
-                    "source_location": {
-                      "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 112,
-                      "end_line": 112,
-                      "column": 30,
-                      "end_column": 42
+                      "end_column": 17
                     },
                     "wtype": {
                       "_$%!#REF": 8
                     },
-                    "op_code": "len",
-                    "immediates": [],
-                    "stack_args": [
-                      {
-                        "_$%!#ID": 420,
-                        "_type": "VarExpression",
-                        "source_location": {
-                          "file": "tests/approvals/time-travel.algo.ts",
-                          "line": 112,
-                          "end_line": 112,
-                          "column": 30,
-                          "end_column": 35
-                        },
-                        "wtype": {
-                          "_$%!#REF": 71
-                        },
-                        "name": "nName"
-                      }
-                    ]
+                    "name": "nRnd"
+                  },
+                  "op": "+",
+                  "right": {
+                    "_$%!#ID": 417,
+                    "_type": "VarExpression",
+                    "source_location": {
+                      "file": "tests/approvals/time-travel.algo.ts",
+                      "line": 112,
+                      "end_line": 112,
+                      "column": 20,
+                      "end_column": 27
+                    },
+                    "wtype": {
+                      "_$%!#REF": 8
+                    },
+                    "name": "nStatus"
                   }
                 }
               }
             },
             {
-              "_$%!#ID": 421,
+              "_$%!#ID": 418,
+              "_type": "IfElse",
+              "source_location": {
+                "file": "tests/approvals/time-travel.algo.ts",
+                "line": 114,
+                "end_line": 114,
+                "column": 4,
+                "end_column": 39
+              },
+              "condition": {
+                "_$%!#ID": 419,
+                "_type": "BooleanBinaryOperation",
+                "source_location": {
+                  "file": "tests/approvals/time-travel.algo.ts",
+                  "line": 114,
+                  "end_line": 114,
+                  "column": 8,
+                  "end_column": 38
+                },
+                "left": {
+                  "_$%!#ID": 420,
+                  "_type": "NumericComparisonExpression",
+                  "source_location": {
+                    "file": "tests/approvals/time-travel.algo.ts",
+                    "line": 114,
+                    "end_line": 114,
+                    "column": 8,
+                    "end_column": 21
+                  },
+                  "lhs": {
+                    "_$%!#ID": 421,
+                    "_type": "VarExpression",
+                    "source_location": {
+                      "file": "tests/approvals/time-travel.algo.ts",
+                      "line": 114,
+                      "end_line": 114,
+                      "column": 8,
+                      "end_column": 15
+                    },
+                    "wtype": {
+                      "_$%!#REF": 8
+                    },
+                    "name": "nStatus"
+                  },
+                  "operator": "==",
+                  "rhs": {
+                    "_$%!#ID": 422,
+                    "_type": "IntegerConstant",
+                    "source_location": {
+                      "file": "tests/approvals/time-travel.algo.ts",
+                      "line": 114,
+                      "end_line": 114,
+                      "column": 20,
+                      "end_column": 21
+                    },
+                    "wtype": {
+                      "_$%!#REF": 8
+                    },
+                    "value": 1,
+                    "teal_alias": null
+                  }
+                },
+                "op": "or",
+                "right": {
+                  "_$%!#ID": 423,
+                  "_type": "NumericComparisonExpression",
+                  "source_location": {
+                    "file": "tests/approvals/time-travel.algo.ts",
+                    "line": 114,
+                    "end_line": 114,
+                    "column": 25,
+                    "end_column": 38
+                  },
+                  "lhs": {
+                    "_$%!#ID": 424,
+                    "_type": "VarExpression",
+                    "source_location": {
+                      "file": "tests/approvals/time-travel.algo.ts",
+                      "line": 114,
+                      "end_line": 114,
+                      "column": 25,
+                      "end_column": 32
+                    },
+                    "wtype": {
+                      "_$%!#REF": 8
+                    },
+                    "name": "nStatus"
+                  },
+                  "operator": "==",
+                  "rhs": {
+                    "_$%!#ID": 425,
+                    "_type": "IntegerConstant",
+                    "source_location": {
+                      "file": "tests/approvals/time-travel.algo.ts",
+                      "line": 114,
+                      "end_line": 114,
+                      "column": 37,
+                      "end_column": 38
+                    },
+                    "wtype": {
+                      "_$%!#REF": 8
+                    },
+                    "value": 2,
+                    "teal_alias": null
+                  }
+                }
+              },
+              "if_branch": {
+                "_$%!#ID": 426,
+                "_type": "Block",
+                "source_location": {
+                  "file": "tests/approvals/time-travel.algo.ts",
+                  "line": 114,
+                  "end_line": 114,
+                  "column": 40,
+                  "end_column": 61
+                },
+                "body": [
+                  {
+                    "_$%!#ID": 427,
+                    "_type": "AssignmentStatement",
+                    "source_location": {
+                      "file": "tests/approvals/time-travel.algo.ts",
+                      "line": 114,
+                      "end_line": 114,
+                      "column": 40,
+                      "end_column": 61
+                    },
+                    "target": {
+                      "_$%!#ID": 428,
+                      "_type": "VarExpression",
+                      "source_location": {
+                        "file": "tests/approvals/time-travel.algo.ts",
+                        "line": 114,
+                        "end_line": 114,
+                        "column": 40,
+                        "end_column": 45
+                      },
+                      "wtype": {
+                        "_$%!#REF": 8
+                      },
+                      "name": "total"
+                    },
+                    "value": {
+                      "_$%!#ID": 429,
+                      "_type": "UInt64BinaryOperation",
+                      "source_location": {
+                        "file": "tests/approvals/time-travel.algo.ts",
+                        "line": 114,
+                        "end_line": 114,
+                        "column": 40,
+                        "end_column": 61
+                      },
+                      "left": {
+                        "_$%!#REF": 428
+                      },
+                      "op": "+",
+                      "right": {
+                        "_$%!#ID": 430,
+                        "_type": "IntrinsicCall",
+                        "source_location": {
+                          "file": "tests/approvals/time-travel.algo.ts",
+                          "line": 114,
+                          "end_line": 114,
+                          "column": 49,
+                          "end_column": 61
+                        },
+                        "wtype": {
+                          "_$%!#REF": 8
+                        },
+                        "op_code": "len",
+                        "immediates": [],
+                        "stack_args": [
+                          {
+                            "_$%!#ID": 431,
+                            "_type": "VarExpression",
+                            "source_location": {
+                              "file": "tests/approvals/time-travel.algo.ts",
+                              "line": 114,
+                              "end_line": 114,
+                              "column": 49,
+                              "end_column": 54
+                            },
+                            "wtype": {
+                              "_$%!#REF": 71
+                            },
+                            "name": "nName"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ],
+                "label": null,
+                "comment": null
+              },
+              "else_branch": null
+            },
+            {
+              "_$%!#ID": 432,
               "_type": "AssignmentStatement",
               "source_location": {
                 "file": "tests/approvals/time-travel.algo.ts",
-                "line": 113,
-                "end_line": 113,
+                "line": 115,
+                "end_line": 115,
                 "column": 10,
                 "end_column": 103
               },
               "target": {
-                "_$%!#ID": 422,
+                "_$%!#ID": 433,
                 "_type": "TupleExpression",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 113,
-                  "end_line": 113,
+                  "line": 115,
+                  "end_line": 115,
                   "column": 10,
                   "end_column": 103
                 },
                 "wtype": {
-                  "_$%!#ID": 423,
+                  "_$%!#ID": 434,
                   "_type": "WTuple",
                   "name": "tuple",
                   "types": [
@@ -6432,12 +6586,12 @@
                 },
                 "items": [
                   {
-                    "_$%!#ID": 424,
+                    "_$%!#ID": 435,
                     "_type": "VarExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 113,
-                      "end_line": 113,
+                      "line": 115,
+                      "end_line": 115,
                       "column": 11,
                       "end_column": 15
                     },
@@ -6447,12 +6601,12 @@
                     "name": "lRnd"
                   },
                   {
-                    "_$%!#ID": 425,
+                    "_$%!#ID": 436,
                     "_type": "VarExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 113,
-                      "end_line": 113,
+                      "line": 115,
+                      "end_line": 115,
                       "column": 17,
                       "end_column": 24
                     },
@@ -6462,12 +6616,12 @@
                     "name": "lStatus"
                   },
                   {
-                    "_$%!#ID": 426,
+                    "_$%!#ID": 437,
                     "_type": "VarExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 113,
-                      "end_line": 113,
+                      "line": 115,
+                      "end_line": 115,
                       "column": 26,
                       "end_column": 32
                     },
@@ -6479,17 +6633,17 @@
                 ]
               },
               "value": {
-                "_$%!#ID": 427,
+                "_$%!#ID": 438,
                 "_type": "TupleExpression",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 113,
-                  "end_line": 113,
+                  "line": 115,
+                  "end_line": 115,
                   "column": 36,
                   "end_column": 103
                 },
                 "wtype": {
-                  "_$%!#ID": 428,
+                  "_$%!#ID": 439,
                   "_type": "WTuple",
                   "name": "tuple",
                   "types": [
@@ -6506,37 +6660,37 @@
                 },
                 "items": [
                   {
-                    "_$%!#ID": 429,
+                    "_$%!#ID": 440,
                     "_type": "TupleItemExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 113,
-                      "end_line": 113,
+                      "line": 115,
+                      "end_line": 115,
                       "column": 36,
                       "end_column": 103
                     },
                     "base": {
-                      "_$%!#ID": 430,
+                      "_$%!#ID": 441,
                       "_type": "SingleEvaluation",
                       "source_location": {
                         "file": "tests/approvals/time-travel.algo.ts",
-                        "line": 113,
-                        "end_line": 113,
+                        "line": 115,
+                        "end_line": 115,
                         "column": 36,
                         "end_column": 103
                       },
                       "source": {
-                        "_$%!#ID": 431,
+                        "_$%!#ID": 442,
                         "_type": "IntrinsicCall",
                         "source_location": {
                           "file": "tests/approvals/time-travel.algo.ts",
-                          "line": 113,
-                          "end_line": 113,
+                          "line": 115,
+                          "end_line": 115,
                           "column": 36,
                           "end_column": 103
                         },
                         "wtype": {
-                          "_$%!#ID": 432,
+                          "_$%!#ID": 443,
                           "_type": "WTuple",
                           "name": "tuple",
                           "types": [
@@ -6555,12 +6709,12 @@
                         "immediates": [],
                         "stack_args": [
                           {
-                            "_$%!#ID": 433,
+                            "_$%!#ID": 444,
                             "_type": "VarExpression",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 113,
-                              "end_line": 113,
+                              "line": 115,
+                              "end_line": 115,
                               "column": 71,
                               "end_column": 75
                             },
@@ -6570,12 +6724,12 @@
                             "name": "acct"
                           },
                           {
-                            "_$%!#ID": 434,
+                            "_$%!#ID": 445,
                             "_type": "VarExpression",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 113,
-                              "end_line": 113,
+                              "line": 115,
+                              "end_line": 115,
                               "column": 77,
                               "end_column": 80
                             },
@@ -6585,12 +6739,12 @@
                             "name": "app"
                           },
                           {
-                            "_$%!#ID": 435,
+                            "_$%!#ID": 446,
                             "_type": "BytesConstant",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 113,
-                              "end_line": 113,
+                              "line": 115,
+                              "end_line": 115,
                               "column": 88,
                               "end_column": 91
                             },
@@ -6601,12 +6755,12 @@
                             "encoding": "utf8"
                           },
                           {
-                            "_$%!#ID": 436,
+                            "_$%!#ID": 447,
                             "_type": "VarExpression",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 113,
-                              "end_line": 113,
+                              "line": 115,
+                              "end_line": 115,
                               "column": 94,
                               "end_column": 98
                             },
@@ -6616,12 +6770,12 @@
                             "name": "from"
                           },
                           {
-                            "_$%!#ID": 437,
+                            "_$%!#ID": 448,
                             "_type": "VarExpression",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 113,
-                              "end_line": 113,
+                              "line": 115,
+                              "end_line": 115,
                               "column": 100,
                               "end_column": 102
                             },
@@ -6637,32 +6791,32 @@
                     "index": 0
                   },
                   {
-                    "_$%!#ID": 438,
+                    "_$%!#ID": 449,
                     "_type": "TupleItemExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 113,
-                      "end_line": 113,
+                      "line": 115,
+                      "end_line": 115,
                       "column": 36,
                       "end_column": 103
                     },
                     "base": {
-                      "_$%!#REF": 430
+                      "_$%!#REF": 441
                     },
                     "index": 1
                   },
                   {
-                    "_$%!#ID": 439,
+                    "_$%!#ID": 450,
                     "_type": "TupleItemExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 113,
-                      "end_line": 113,
+                      "line": 115,
+                      "end_line": 115,
                       "column": 36,
                       "end_column": 103
                     },
                     "base": {
-                      "_$%!#REF": 430
+                      "_$%!#REF": 441
                     },
                     "index": 2
                   }
@@ -6670,22 +6824,22 @@
               }
             },
             {
-              "_$%!#ID": 440,
+              "_$%!#ID": 451,
               "_type": "AssignmentStatement",
               "source_location": {
                 "file": "tests/approvals/time-travel.algo.ts",
-                "line": 114,
-                "end_line": 114,
+                "line": 116,
+                "end_line": 116,
                 "column": 4,
                 "end_column": 36
               },
               "target": {
-                "_$%!#ID": 441,
+                "_$%!#ID": 452,
                 "_type": "VarExpression",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 114,
-                  "end_line": 114,
+                  "line": 116,
+                  "end_line": 116,
                   "column": 4,
                   "end_column": 9
                 },
@@ -6695,46 +6849,46 @@
                 "name": "total"
               },
               "value": {
-                "_$%!#ID": 442,
+                "_$%!#ID": 453,
                 "_type": "UInt64BinaryOperation",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 114,
-                  "end_line": 114,
+                  "line": 116,
+                  "end_line": 116,
                   "column": 4,
                   "end_column": 36
                 },
                 "left": {
-                  "_$%!#REF": 441
+                  "_$%!#REF": 452
                 },
                 "op": "+",
                 "right": {
-                  "_$%!#ID": 443,
+                  "_$%!#ID": 454,
                   "_type": "UInt64BinaryOperation",
                   "source_location": {
                     "file": "tests/approvals/time-travel.algo.ts",
-                    "line": 114,
-                    "end_line": 114,
+                    "line": 116,
+                    "end_line": 116,
                     "column": 13,
                     "end_column": 36
                   },
                   "left": {
-                    "_$%!#ID": 444,
+                    "_$%!#ID": 455,
                     "_type": "UInt64BinaryOperation",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 114,
-                      "end_line": 114,
+                      "line": 116,
+                      "end_line": 116,
                       "column": 13,
                       "end_column": 27
                     },
                     "left": {
-                      "_$%!#ID": 445,
+                      "_$%!#ID": 456,
                       "_type": "VarExpression",
                       "source_location": {
                         "file": "tests/approvals/time-travel.algo.ts",
-                        "line": 114,
-                        "end_line": 114,
+                        "line": 116,
+                        "end_line": 116,
                         "column": 13,
                         "end_column": 17
                       },
@@ -6745,12 +6899,12 @@
                     },
                     "op": "+",
                     "right": {
-                      "_$%!#ID": 446,
+                      "_$%!#ID": 457,
                       "_type": "VarExpression",
                       "source_location": {
                         "file": "tests/approvals/time-travel.algo.ts",
-                        "line": 114,
-                        "end_line": 114,
+                        "line": 116,
+                        "end_line": 116,
                         "column": 20,
                         "end_column": 27
                       },
@@ -6762,12 +6916,12 @@
                   },
                   "op": "+",
                   "right": {
-                    "_$%!#ID": 447,
+                    "_$%!#ID": 458,
                     "_type": "VarExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 114,
-                      "end_line": 114,
+                      "line": 116,
+                      "end_line": 116,
                       "column": 30,
                       "end_column": 36
                     },
@@ -6780,27 +6934,27 @@
               }
             },
             {
-              "_$%!#ID": 448,
+              "_$%!#ID": 459,
               "_type": "AssignmentStatement",
               "source_location": {
                 "file": "tests/approvals/time-travel.algo.ts",
-                "line": 115,
-                "end_line": 115,
+                "line": 117,
+                "end_line": 117,
                 "column": 10,
                 "end_column": 102
               },
               "target": {
-                "_$%!#ID": 449,
+                "_$%!#ID": 460,
                 "_type": "TupleExpression",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 115,
-                  "end_line": 115,
+                  "line": 117,
+                  "end_line": 117,
                   "column": 10,
                   "end_column": 102
                 },
                 "wtype": {
-                  "_$%!#ID": 450,
+                  "_$%!#ID": 461,
                   "_type": "WTuple",
                   "name": "tuple",
                   "types": [
@@ -6817,12 +6971,12 @@
                 },
                 "items": [
                   {
-                    "_$%!#ID": 451,
+                    "_$%!#ID": 462,
                     "_type": "VarExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 115,
-                      "end_line": 115,
+                      "line": 117,
+                      "end_line": 117,
                       "column": 11,
                       "end_column": 15
                     },
@@ -6832,12 +6986,12 @@
                     "name": "sRnd"
                   },
                   {
-                    "_$%!#ID": 452,
+                    "_$%!#ID": 463,
                     "_type": "VarExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 115,
-                      "end_line": 115,
+                      "line": 117,
+                      "end_line": 117,
                       "column": 17,
                       "end_column": 24
                     },
@@ -6847,12 +7001,12 @@
                     "name": "sStatus"
                   },
                   {
-                    "_$%!#ID": 453,
+                    "_$%!#ID": 464,
                     "_type": "VarExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 115,
-                      "end_line": 115,
+                      "line": 117,
+                      "end_line": 117,
                       "column": 26,
                       "end_column": 32
                     },
@@ -6864,17 +7018,17 @@
                 ]
               },
               "value": {
-                "_$%!#ID": 454,
+                "_$%!#ID": 465,
                 "_type": "TupleExpression",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 115,
-                  "end_line": 115,
+                  "line": 117,
+                  "end_line": 117,
                   "column": 36,
                   "end_column": 102
                 },
                 "wtype": {
-                  "_$%!#ID": 455,
+                  "_$%!#ID": 466,
                   "_type": "WTuple",
                   "name": "tuple",
                   "types": [
@@ -6891,37 +7045,37 @@
                 },
                 "items": [
                   {
-                    "_$%!#ID": 456,
+                    "_$%!#ID": 467,
                     "_type": "TupleItemExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 115,
-                      "end_line": 115,
+                      "line": 117,
+                      "end_line": 117,
                       "column": 36,
                       "end_column": 102
                     },
                     "base": {
-                      "_$%!#ID": 457,
+                      "_$%!#ID": 468,
                       "_type": "SingleEvaluation",
                       "source_location": {
                         "file": "tests/approvals/time-travel.algo.ts",
-                        "line": 115,
-                        "end_line": 115,
+                        "line": 117,
+                        "end_line": 117,
                         "column": 36,
                         "end_column": 102
                       },
                       "source": {
-                        "_$%!#ID": 458,
+                        "_$%!#ID": 469,
                         "_type": "IntrinsicCall",
                         "source_location": {
                           "file": "tests/approvals/time-travel.algo.ts",
-                          "line": 115,
-                          "end_line": 115,
+                          "line": 117,
+                          "end_line": 117,
                           "column": 36,
                           "end_column": 102
                         },
                         "wtype": {
-                          "_$%!#ID": 459,
+                          "_$%!#ID": 470,
                           "_type": "WTuple",
                           "name": "tuple",
                           "types": [
@@ -6940,12 +7094,12 @@
                         "immediates": [],
                         "stack_args": [
                           {
-                            "_$%!#ID": 460,
+                            "_$%!#ID": 471,
                             "_type": "VarExpression",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 115,
-                              "end_line": 115,
+                              "line": 117,
+                              "end_line": 117,
                               "column": 70,
                               "end_column": 74
                             },
@@ -6955,12 +7109,12 @@
                             "name": "acct"
                           },
                           {
-                            "_$%!#ID": 461,
+                            "_$%!#ID": 472,
                             "_type": "VarExpression",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 115,
-                              "end_line": 115,
+                              "line": 117,
+                              "end_line": 117,
                               "column": 76,
                               "end_column": 79
                             },
@@ -6970,12 +7124,12 @@
                             "name": "app"
                           },
                           {
-                            "_$%!#ID": 462,
+                            "_$%!#ID": 473,
                             "_type": "BytesConstant",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 115,
-                              "end_line": 115,
+                              "line": 117,
+                              "end_line": 117,
                               "column": 87,
                               "end_column": 90
                             },
@@ -6986,12 +7140,12 @@
                             "encoding": "utf8"
                           },
                           {
-                            "_$%!#ID": 463,
+                            "_$%!#ID": 474,
                             "_type": "VarExpression",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 115,
-                              "end_line": 115,
+                              "line": 117,
+                              "end_line": 117,
                               "column": 93,
                               "end_column": 97
                             },
@@ -7001,12 +7155,12 @@
                             "name": "from"
                           },
                           {
-                            "_$%!#ID": 464,
+                            "_$%!#ID": 475,
                             "_type": "VarExpression",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 115,
-                              "end_line": 115,
+                              "line": 117,
+                              "end_line": 117,
                               "column": 99,
                               "end_column": 101
                             },
@@ -7022,32 +7176,32 @@
                     "index": 0
                   },
                   {
-                    "_$%!#ID": 465,
+                    "_$%!#ID": 476,
                     "_type": "TupleItemExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 115,
-                      "end_line": 115,
+                      "line": 117,
+                      "end_line": 117,
                       "column": 36,
                       "end_column": 102
                     },
                     "base": {
-                      "_$%!#REF": 457
+                      "_$%!#REF": 468
                     },
                     "index": 1
                   },
                   {
-                    "_$%!#ID": 466,
+                    "_$%!#ID": 477,
                     "_type": "TupleItemExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 115,
-                      "end_line": 115,
+                      "line": 117,
+                      "end_line": 117,
                       "column": 36,
                       "end_column": 102
                     },
                     "base": {
-                      "_$%!#REF": 457
+                      "_$%!#REF": 468
                     },
                     "index": 2
                   }
@@ -7055,22 +7209,22 @@
               }
             },
             {
-              "_$%!#ID": 467,
+              "_$%!#ID": 478,
               "_type": "AssignmentStatement",
               "source_location": {
                 "file": "tests/approvals/time-travel.algo.ts",
-                "line": 116,
-                "end_line": 116,
+                "line": 118,
+                "end_line": 118,
                 "column": 4,
-                "end_column": 43
+                "end_column": 27
               },
               "target": {
-                "_$%!#ID": 468,
+                "_$%!#ID": 479,
                 "_type": "VarExpression",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 116,
-                  "end_line": 116,
+                  "line": 118,
+                  "end_line": 118,
                   "column": 4,
                   "end_column": 9
                 },
@@ -7080,130 +7234,284 @@
                 "name": "total"
               },
               "value": {
-                "_$%!#ID": 469,
+                "_$%!#ID": 480,
                 "_type": "UInt64BinaryOperation",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 116,
-                  "end_line": 116,
+                  "line": 118,
+                  "end_line": 118,
                   "column": 4,
-                  "end_column": 43
+                  "end_column": 27
                 },
                 "left": {
-                  "_$%!#REF": 468
+                  "_$%!#REF": 479
                 },
                 "op": "+",
                 "right": {
-                  "_$%!#ID": 470,
+                  "_$%!#ID": 481,
                   "_type": "UInt64BinaryOperation",
                   "source_location": {
                     "file": "tests/approvals/time-travel.algo.ts",
-                    "line": 116,
-                    "end_line": 116,
+                    "line": 118,
+                    "end_line": 118,
                     "column": 13,
-                    "end_column": 43
+                    "end_column": 27
                   },
                   "left": {
-                    "_$%!#ID": 471,
-                    "_type": "UInt64BinaryOperation",
+                    "_$%!#ID": 482,
+                    "_type": "VarExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 116,
-                      "end_line": 116,
+                      "line": 118,
+                      "end_line": 118,
                       "column": 13,
-                      "end_column": 27
-                    },
-                    "left": {
-                      "_$%!#ID": 472,
-                      "_type": "VarExpression",
-                      "source_location": {
-                        "file": "tests/approvals/time-travel.algo.ts",
-                        "line": 116,
-                        "end_line": 116,
-                        "column": 13,
-                        "end_column": 17
-                      },
-                      "wtype": {
-                        "_$%!#REF": 8
-                      },
-                      "name": "sRnd"
-                    },
-                    "op": "+",
-                    "right": {
-                      "_$%!#ID": 473,
-                      "_type": "VarExpression",
-                      "source_location": {
-                        "file": "tests/approvals/time-travel.algo.ts",
-                        "line": 116,
-                        "end_line": 116,
-                        "column": 20,
-                        "end_column": 27
-                      },
-                      "wtype": {
-                        "_$%!#REF": 8
-                      },
-                      "name": "sStatus"
-                    }
-                  },
-                  "op": "+",
-                  "right": {
-                    "_$%!#ID": 474,
-                    "_type": "IntrinsicCall",
-                    "source_location": {
-                      "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 116,
-                      "end_line": 116,
-                      "column": 30,
-                      "end_column": 43
+                      "end_column": 17
                     },
                     "wtype": {
                       "_$%!#REF": 8
                     },
-                    "op_code": "len",
-                    "immediates": [],
-                    "stack_args": [
-                      {
-                        "_$%!#ID": 475,
-                        "_type": "VarExpression",
-                        "source_location": {
-                          "file": "tests/approvals/time-travel.algo.ts",
-                          "line": 116,
-                          "end_line": 116,
-                          "column": 30,
-                          "end_column": 36
-                        },
-                        "wtype": {
-                          "_$%!#REF": 71
-                        },
-                        "name": "sValue"
-                      }
-                    ]
+                    "name": "sRnd"
+                  },
+                  "op": "+",
+                  "right": {
+                    "_$%!#ID": 483,
+                    "_type": "VarExpression",
+                    "source_location": {
+                      "file": "tests/approvals/time-travel.algo.ts",
+                      "line": 118,
+                      "end_line": 118,
+                      "column": 20,
+                      "end_column": 27
+                    },
+                    "wtype": {
+                      "_$%!#REF": 8
+                    },
+                    "name": "sStatus"
                   }
                 }
               }
             },
             {
-              "_$%!#ID": 476,
+              "_$%!#ID": 484,
+              "_type": "IfElse",
+              "source_location": {
+                "file": "tests/approvals/time-travel.algo.ts",
+                "line": 120,
+                "end_line": 120,
+                "column": 4,
+                "end_column": 39
+              },
+              "condition": {
+                "_$%!#ID": 485,
+                "_type": "BooleanBinaryOperation",
+                "source_location": {
+                  "file": "tests/approvals/time-travel.algo.ts",
+                  "line": 120,
+                  "end_line": 120,
+                  "column": 8,
+                  "end_column": 38
+                },
+                "left": {
+                  "_$%!#ID": 486,
+                  "_type": "NumericComparisonExpression",
+                  "source_location": {
+                    "file": "tests/approvals/time-travel.algo.ts",
+                    "line": 120,
+                    "end_line": 120,
+                    "column": 8,
+                    "end_column": 21
+                  },
+                  "lhs": {
+                    "_$%!#ID": 487,
+                    "_type": "VarExpression",
+                    "source_location": {
+                      "file": "tests/approvals/time-travel.algo.ts",
+                      "line": 120,
+                      "end_line": 120,
+                      "column": 8,
+                      "end_column": 15
+                    },
+                    "wtype": {
+                      "_$%!#REF": 8
+                    },
+                    "name": "sStatus"
+                  },
+                  "operator": "==",
+                  "rhs": {
+                    "_$%!#ID": 488,
+                    "_type": "IntegerConstant",
+                    "source_location": {
+                      "file": "tests/approvals/time-travel.algo.ts",
+                      "line": 120,
+                      "end_line": 120,
+                      "column": 20,
+                      "end_column": 21
+                    },
+                    "wtype": {
+                      "_$%!#REF": 8
+                    },
+                    "value": 1,
+                    "teal_alias": null
+                  }
+                },
+                "op": "or",
+                "right": {
+                  "_$%!#ID": 489,
+                  "_type": "NumericComparisonExpression",
+                  "source_location": {
+                    "file": "tests/approvals/time-travel.algo.ts",
+                    "line": 120,
+                    "end_line": 120,
+                    "column": 25,
+                    "end_column": 38
+                  },
+                  "lhs": {
+                    "_$%!#ID": 490,
+                    "_type": "VarExpression",
+                    "source_location": {
+                      "file": "tests/approvals/time-travel.algo.ts",
+                      "line": 120,
+                      "end_line": 120,
+                      "column": 25,
+                      "end_column": 32
+                    },
+                    "wtype": {
+                      "_$%!#REF": 8
+                    },
+                    "name": "sStatus"
+                  },
+                  "operator": "==",
+                  "rhs": {
+                    "_$%!#ID": 491,
+                    "_type": "IntegerConstant",
+                    "source_location": {
+                      "file": "tests/approvals/time-travel.algo.ts",
+                      "line": 120,
+                      "end_line": 120,
+                      "column": 37,
+                      "end_column": 38
+                    },
+                    "wtype": {
+                      "_$%!#REF": 8
+                    },
+                    "value": 2,
+                    "teal_alias": null
+                  }
+                }
+              },
+              "if_branch": {
+                "_$%!#ID": 492,
+                "_type": "Block",
+                "source_location": {
+                  "file": "tests/approvals/time-travel.algo.ts",
+                  "line": 120,
+                  "end_line": 120,
+                  "column": 40,
+                  "end_column": 62
+                },
+                "body": [
+                  {
+                    "_$%!#ID": 493,
+                    "_type": "AssignmentStatement",
+                    "source_location": {
+                      "file": "tests/approvals/time-travel.algo.ts",
+                      "line": 120,
+                      "end_line": 120,
+                      "column": 40,
+                      "end_column": 62
+                    },
+                    "target": {
+                      "_$%!#ID": 494,
+                      "_type": "VarExpression",
+                      "source_location": {
+                        "file": "tests/approvals/time-travel.algo.ts",
+                        "line": 120,
+                        "end_line": 120,
+                        "column": 40,
+                        "end_column": 45
+                      },
+                      "wtype": {
+                        "_$%!#REF": 8
+                      },
+                      "name": "total"
+                    },
+                    "value": {
+                      "_$%!#ID": 495,
+                      "_type": "UInt64BinaryOperation",
+                      "source_location": {
+                        "file": "tests/approvals/time-travel.algo.ts",
+                        "line": 120,
+                        "end_line": 120,
+                        "column": 40,
+                        "end_column": 62
+                      },
+                      "left": {
+                        "_$%!#REF": 494
+                      },
+                      "op": "+",
+                      "right": {
+                        "_$%!#ID": 496,
+                        "_type": "IntrinsicCall",
+                        "source_location": {
+                          "file": "tests/approvals/time-travel.algo.ts",
+                          "line": 120,
+                          "end_line": 120,
+                          "column": 49,
+                          "end_column": 62
+                        },
+                        "wtype": {
+                          "_$%!#REF": 8
+                        },
+                        "op_code": "len",
+                        "immediates": [],
+                        "stack_args": [
+                          {
+                            "_$%!#ID": 497,
+                            "_type": "VarExpression",
+                            "source_location": {
+                              "file": "tests/approvals/time-travel.algo.ts",
+                              "line": 120,
+                              "end_line": 120,
+                              "column": 49,
+                              "end_column": 55
+                            },
+                            "wtype": {
+                              "_$%!#REF": 71
+                            },
+                            "name": "sValue"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ],
+                "label": null,
+                "comment": null
+              },
+              "else_branch": null
+            },
+            {
+              "_$%!#ID": 498,
               "_type": "AssignmentStatement",
               "source_location": {
                 "file": "tests/approvals/time-travel.algo.ts",
-                "line": 117,
-                "end_line": 117,
+                "line": 121,
+                "end_line": 121,
                 "column": 10,
                 "end_column": 92
               },
               "target": {
-                "_$%!#ID": 477,
+                "_$%!#ID": 499,
                 "_type": "TupleExpression",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 117,
-                  "end_line": 117,
+                  "line": 121,
+                  "end_line": 121,
                   "column": 10,
                   "end_column": 92
                 },
                 "wtype": {
-                  "_$%!#ID": 478,
+                  "_$%!#ID": 500,
                   "_type": "WTuple",
                   "name": "tuple",
                   "types": [
@@ -7220,12 +7528,12 @@
                 },
                 "items": [
                   {
-                    "_$%!#ID": 479,
+                    "_$%!#ID": 501,
                     "_type": "VarExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 117,
-                      "end_line": 117,
+                      "line": 121,
+                      "end_line": 121,
                       "column": 11,
                       "end_column": 15
                     },
@@ -7235,12 +7543,12 @@
                     "name": "pRnd"
                   },
                   {
-                    "_$%!#ID": 480,
+                    "_$%!#ID": 502,
                     "_type": "VarExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 117,
-                      "end_line": 117,
+                      "line": 121,
+                      "end_line": 121,
                       "column": 17,
                       "end_column": 24
                     },
@@ -7250,12 +7558,12 @@
                     "name": "pStatus"
                   },
                   {
-                    "_$%!#ID": 481,
+                    "_$%!#ID": 503,
                     "_type": "VarExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 117,
-                      "end_line": 117,
+                      "line": 121,
+                      "end_line": 121,
                       "column": 26,
                       "end_column": 31
                     },
@@ -7267,17 +7575,17 @@
                 ]
               },
               "value": {
-                "_$%!#ID": 482,
+                "_$%!#ID": 504,
                 "_type": "TupleExpression",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 117,
-                  "end_line": 117,
+                  "line": 121,
+                  "end_line": 121,
                   "column": 35,
                   "end_column": 92
                 },
                 "wtype": {
-                  "_$%!#ID": 483,
+                  "_$%!#ID": 505,
                   "_type": "WTuple",
                   "name": "tuple",
                   "types": [
@@ -7294,37 +7602,37 @@
                 },
                 "items": [
                   {
-                    "_$%!#ID": 484,
+                    "_$%!#ID": 506,
                     "_type": "TupleItemExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 117,
-                      "end_line": 117,
+                      "line": 121,
+                      "end_line": 121,
                       "column": 35,
                       "end_column": 92
                     },
                     "base": {
-                      "_$%!#ID": 485,
+                      "_$%!#ID": 507,
                       "_type": "SingleEvaluation",
                       "source_location": {
                         "file": "tests/approvals/time-travel.algo.ts",
-                        "line": 117,
-                        "end_line": 117,
+                        "line": 121,
+                        "end_line": 121,
                         "column": 35,
                         "end_column": 92
                       },
                       "source": {
-                        "_$%!#ID": 486,
+                        "_$%!#ID": 508,
                         "_type": "IntrinsicCall",
                         "source_location": {
                           "file": "tests/approvals/time-travel.algo.ts",
-                          "line": 117,
-                          "end_line": 117,
+                          "line": 121,
+                          "end_line": 121,
                           "column": 35,
                           "end_column": 92
                         },
                         "wtype": {
-                          "_$%!#ID": 487,
+                          "_$%!#ID": 509,
                           "_type": "WTuple",
                           "name": "tuple",
                           "types": [
@@ -7343,12 +7651,12 @@
                         "immediates": [],
                         "stack_args": [
                           {
-                            "_$%!#ID": 488,
+                            "_$%!#ID": 510,
                             "_type": "VarExpression",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 117,
-                              "end_line": 117,
+                              "line": 121,
+                              "end_line": 121,
                               "column": 65,
                               "end_column": 68
                             },
@@ -7358,12 +7666,12 @@
                             "name": "app"
                           },
                           {
-                            "_$%!#ID": 489,
+                            "_$%!#ID": 511,
                             "_type": "BytesConstant",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 117,
-                              "end_line": 117,
+                              "line": 121,
+                              "end_line": 121,
                               "column": 76,
                               "end_column": 80
                             },
@@ -7374,12 +7682,12 @@
                             "encoding": "utf8"
                           },
                           {
-                            "_$%!#ID": 490,
+                            "_$%!#ID": 512,
                             "_type": "VarExpression",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 117,
-                              "end_line": 117,
+                              "line": 121,
+                              "end_line": 121,
                               "column": 83,
                               "end_column": 87
                             },
@@ -7389,12 +7697,12 @@
                             "name": "from"
                           },
                           {
-                            "_$%!#ID": 491,
+                            "_$%!#ID": 513,
                             "_type": "VarExpression",
                             "source_location": {
                               "file": "tests/approvals/time-travel.algo.ts",
-                              "line": 117,
-                              "end_line": 117,
+                              "line": 121,
+                              "end_line": 121,
                               "column": 89,
                               "end_column": 91
                             },
@@ -7410,32 +7718,32 @@
                     "index": 0
                   },
                   {
-                    "_$%!#ID": 492,
+                    "_$%!#ID": 514,
                     "_type": "TupleItemExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 117,
-                      "end_line": 117,
+                      "line": 121,
+                      "end_line": 121,
                       "column": 35,
                       "end_column": 92
                     },
                     "base": {
-                      "_$%!#REF": 485
+                      "_$%!#REF": 507
                     },
                     "index": 1
                   },
                   {
-                    "_$%!#ID": 493,
+                    "_$%!#ID": 515,
                     "_type": "TupleItemExpression",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 117,
-                      "end_line": 117,
+                      "line": 121,
+                      "end_line": 121,
                       "column": 35,
                       "end_column": 92
                     },
                     "base": {
-                      "_$%!#REF": 485
+                      "_$%!#REF": 507
                     },
                     "index": 2
                   }
@@ -7443,22 +7751,22 @@
               }
             },
             {
-              "_$%!#ID": 494,
+              "_$%!#ID": 516,
               "_type": "AssignmentStatement",
               "source_location": {
                 "file": "tests/approvals/time-travel.algo.ts",
-                "line": 118,
-                "end_line": 118,
+                "line": 122,
+                "end_line": 122,
                 "column": 4,
                 "end_column": 42
               },
               "target": {
-                "_$%!#ID": 495,
+                "_$%!#ID": 517,
                 "_type": "VarExpression",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 118,
-                  "end_line": 118,
+                  "line": 122,
+                  "end_line": 122,
                   "column": 4,
                   "end_column": 9
                 },
@@ -7468,46 +7776,46 @@
                 "name": "total"
               },
               "value": {
-                "_$%!#ID": 496,
+                "_$%!#ID": 518,
                 "_type": "UInt64BinaryOperation",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 118,
-                  "end_line": 118,
+                  "line": 122,
+                  "end_line": 122,
                   "column": 4,
                   "end_column": 42
                 },
                 "left": {
-                  "_$%!#REF": 495
+                  "_$%!#REF": 517
                 },
                 "op": "+",
                 "right": {
-                  "_$%!#ID": 497,
+                  "_$%!#ID": 519,
                   "_type": "UInt64BinaryOperation",
                   "source_location": {
                     "file": "tests/approvals/time-travel.algo.ts",
-                    "line": 118,
-                    "end_line": 118,
+                    "line": 122,
+                    "end_line": 122,
                     "column": 13,
                     "end_column": 42
                   },
                   "left": {
-                    "_$%!#ID": 498,
+                    "_$%!#ID": 520,
                     "_type": "UInt64BinaryOperation",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 118,
-                      "end_line": 118,
+                      "line": 122,
+                      "end_line": 122,
                       "column": 13,
                       "end_column": 27
                     },
                     "left": {
-                      "_$%!#ID": 499,
+                      "_$%!#ID": 521,
                       "_type": "VarExpression",
                       "source_location": {
                         "file": "tests/approvals/time-travel.algo.ts",
-                        "line": 118,
-                        "end_line": 118,
+                        "line": 122,
+                        "end_line": 122,
                         "column": 13,
                         "end_column": 17
                       },
@@ -7518,12 +7826,12 @@
                     },
                     "op": "+",
                     "right": {
-                      "_$%!#ID": 500,
+                      "_$%!#ID": 522,
                       "_type": "VarExpression",
                       "source_location": {
                         "file": "tests/approvals/time-travel.algo.ts",
-                        "line": 118,
-                        "end_line": 118,
+                        "line": 122,
+                        "end_line": 122,
                         "column": 20,
                         "end_column": 27
                       },
@@ -7535,12 +7843,12 @@
                   },
                   "op": "+",
                   "right": {
-                    "_$%!#ID": 501,
+                    "_$%!#ID": 523,
                     "_type": "IntrinsicCall",
                     "source_location": {
                       "file": "tests/approvals/time-travel.algo.ts",
-                      "line": 118,
-                      "end_line": 118,
+                      "line": 122,
+                      "end_line": 122,
                       "column": 30,
                       "end_column": 42
                     },
@@ -7551,12 +7859,12 @@
                     "immediates": [],
                     "stack_args": [
                       {
-                        "_$%!#ID": 502,
+                        "_$%!#ID": 524,
                         "_type": "VarExpression",
                         "source_location": {
                           "file": "tests/approvals/time-travel.algo.ts",
-                          "line": 118,
-                          "end_line": 118,
+                          "line": 122,
+                          "end_line": 122,
                           "column": 30,
                           "end_column": 35
                         },
@@ -7571,22 +7879,22 @@
               }
             },
             {
-              "_$%!#ID": 503,
+              "_$%!#ID": 525,
               "_type": "ReturnStatement",
               "source_location": {
                 "file": "tests/approvals/time-travel.algo.ts",
-                "line": 119,
-                "end_line": 119,
+                "line": 123,
+                "end_line": 123,
                 "column": 4,
                 "end_column": 16
               },
               "value": {
-                "_$%!#ID": 504,
+                "_$%!#ID": 526,
                 "_type": "VarExpression",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 119,
-                  "end_line": 119,
+                  "line": 123,
+                  "end_line": 123,
                   "column": 11,
                   "end_column": 16
                 },
@@ -7631,7 +7939,7 @@
         }
       },
       {
-        "_$%!#ID": 505,
+        "_$%!#ID": 527,
         "_type": "ContractMethod",
         "source_location": {
           "file": "tests/approvals/time-travel.algo.ts",
@@ -7645,7 +7953,7 @@
           "_$%!#REF": 12
         },
         "body": {
-          "_$%!#ID": 506,
+          "_$%!#ID": 528,
           "_type": "Block",
           "source_location": {
             "file": "tests/approvals/time-travel.algo.ts",
@@ -7684,7 +7992,7 @@
         }
       },
       {
-        "_$%!#ID": 507,
+        "_$%!#ID": 529,
         "_type": "ContractMethod",
         "source_location": {
           "file": "tests/approvals/time-travel.algo.ts",
@@ -7698,7 +8006,7 @@
           "_$%!#REF": 12
         },
         "body": {
-          "_$%!#ID": 508,
+          "_$%!#ID": 530,
           "_type": "Block",
           "source_location": {
             "file": "tests/approvals/time-travel.algo.ts",
@@ -7709,7 +8017,7 @@
           },
           "body": [
             {
-              "_$%!#ID": 509,
+              "_$%!#ID": 531,
               "_type": "ExpressionStatement",
               "source_location": {
                 "file": "tests/approvals/time-travel.algo.ts",
@@ -7719,7 +8027,7 @@
                 "end_column": 50
               },
               "expr": {
-                "_$%!#ID": 510,
+                "_$%!#ID": 532,
                 "_type": "SubroutineCallExpression",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
@@ -7739,7 +8047,7 @@
               }
             },
             {
-              "_$%!#ID": 511,
+              "_$%!#ID": 533,
               "_type": "AssignmentStatement",
               "source_location": {
                 "file": "tests/approvals/time-travel.algo.ts",
@@ -7749,7 +8057,7 @@
                 "end_column": 52
               },
               "target": {
-                "_$%!#ID": 512,
+                "_$%!#ID": 534,
                 "_type": "AppStateExpression",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
@@ -7762,7 +8070,7 @@
                   "_$%!#REF": 8
                 },
                 "key": {
-                  "_$%!#ID": 513,
+                  "_$%!#ID": 535,
                   "_type": "BytesConstant",
                   "source_location": {
                     "file": "tests/approvals/time-travel.algo.ts",
@@ -7780,7 +8088,7 @@
                 "exists_assertion_message": null
               },
               "value": {
-                "_$%!#ID": 514,
+                "_$%!#ID": 536,
                 "_type": "IntegerConstant",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
@@ -7813,7 +8121,7 @@
         "arc4_method_config": null
       },
       {
-        "_$%!#ID": 515,
+        "_$%!#ID": 537,
         "_type": "ContractMethod",
         "source_location": {
           "file": null,
@@ -7827,7 +8135,7 @@
           "_$%!#REF": 12
         },
         "body": {
-          "_$%!#ID": 516,
+          "_$%!#ID": 538,
           "_type": "Block",
           "source_location": {
             "file": null,
@@ -7855,7 +8163,7 @@
     ],
     "app_state": [
       {
-        "_$%!#ID": 517,
+        "_$%!#ID": 539,
         "_type": "AppStorageDefinition",
         "source_location": {
           "file": "tests/approvals/time-travel.algo.ts",
@@ -7871,7 +8179,7 @@
         },
         "key_wtype": null,
         "key": {
-          "_$%!#ID": 518,
+          "_$%!#ID": 540,
           "_type": "BytesConstant",
           "source_location": {
             "file": "tests/approvals/time-travel.algo.ts",
@@ -7889,7 +8197,7 @@
         "description": null
       },
       {
-        "_$%!#ID": 519,
+        "_$%!#ID": 541,
         "_type": "AppStorageDefinition",
         "source_location": {
           "file": "tests/approvals/time-travel.algo.ts",
@@ -7910,7 +8218,7 @@
         "description": null
       },
       {
-        "_$%!#ID": 520,
+        "_$%!#ID": 542,
         "_type": "AppStorageDefinition",
         "source_location": {
           "file": "tests/approvals/time-travel.algo.ts",
@@ -7922,7 +8230,7 @@
         "member_name": "items",
         "kind": 3,
         "storage_wtype": {
-          "_$%!#ID": 521,
+          "_$%!#ID": 543,
           "_type": "ARC4DynamicArray",
           "immutable": false,
           "arc4_alias": null,
@@ -7938,7 +8246,7 @@
         "description": null
       },
       {
-        "_$%!#ID": 522,
+        "_$%!#ID": 544,
         "_type": "AppStorageDefinition",
         "source_location": {
           "file": "tests/approvals/time-travel.algo.ts",
@@ -7950,7 +8258,7 @@
         "member_name": "point",
         "kind": 3,
         "storage_wtype": {
-          "_$%!#ID": 523,
+          "_$%!#ID": 545,
           "_type": "ARC4Struct",
           "name": "tests/approvals/time-travel.algo.ts::Point",
           "arc4_alias": null,
@@ -7993,12 +8301,12 @@
     "autosalt": null
   },
   {
-    "_$%!#ID": 524,
+    "_$%!#ID": 546,
     "_type": "Subroutine",
     "source_location": {
       "file": "tests/approvals/time-travel.algo.ts",
-      "line": 123,
-      "end_line": 123,
+      "line": 127,
+      "end_line": 127,
       "column": 0,
       "end_column": 34
     },
@@ -8008,8 +8316,8 @@
         "name": "rnd",
         "source_location": {
           "file": "tests/approvals/time-travel.algo.ts",
-          "line": 123,
-          "end_line": 123,
+          "line": 127,
+          "end_line": 127,
           "column": 16,
           "end_column": 27
         },
@@ -8022,33 +8330,33 @@
       "_$%!#REF": 12
     },
     "body": {
-      "_$%!#ID": 525,
+      "_$%!#ID": 547,
       "_type": "Block",
       "source_location": {
         "file": "tests/approvals/time-travel.algo.ts",
-        "line": 123,
-        "end_line": 125,
+        "line": 127,
+        "end_line": 129,
         "column": 35,
         "end_column": 1
       },
       "body": [
         {
-          "_$%!#ID": 526,
+          "_$%!#ID": 548,
           "_type": "ExpressionStatement",
           "source_location": {
             "file": "tests/approvals/time-travel.algo.ts",
-            "line": 124,
-            "end_line": 124,
+            "line": 128,
+            "end_line": 128,
             "column": 2,
             "end_column": 25
           },
           "expr": {
-            "_$%!#ID": 527,
+            "_$%!#ID": 549,
             "_type": "IntrinsicCall",
             "source_location": {
               "file": "tests/approvals/time-travel.algo.ts",
-              "line": 124,
-              "end_line": 124,
+              "line": 128,
+              "end_line": 128,
               "column": 2,
               "end_column": 25
             },
@@ -8059,12 +8367,12 @@
             "immediates": [],
             "stack_args": [
               {
-                "_$%!#ID": 528,
+                "_$%!#ID": 550,
                 "_type": "VarExpression",
                 "source_location": {
                   "file": "tests/approvals/time-travel.algo.ts",
-                  "line": 124,
-                  "end_line": 124,
+                  "line": 128,
+                  "end_line": 128,
                   "column": 21,
                   "end_column": 24
                 },

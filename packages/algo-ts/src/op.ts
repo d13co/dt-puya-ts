@@ -3738,6 +3738,7 @@ export const TimeTravel = {
   /**
    * round X and status Y of the first change of key B of app A's global state between rounds C and D, and Z its new value (0 if deleted or unchanged)
    * POST /v2/query only (non-standard fork feature), on a node that keeps history; simulate and blocks refuse a program with it. Its last two args are the range's ends, from and to, inclusive: it searches oldest first when from <= to, else newest first. Status: 0 no change, 1 created, 2 changed, 3 deleted. Costs 20 more for each version it examined. Fails if from or to is after the query round or before the history's first round. A search reads at most max-scan-step-bytes of history: then status is 4, and X the round to resume from, as from. The searches of a call read at most max-call-scan-bytes in all; a search once they are spent fails the call.
+   * Z has the key's type only when Y is 1 or 2: otherwise it is the uint64 0, also for the Bytes variant, so check Y before using Z. Z is bytes or uint64 as the key holds, whichever variant is called.
    * @see Native TEAL opcode: [`tt_global_key_change`](https://github.com/d13co/dt-algorand/blob/dtalgorand/ledger/timetravel/README.md#when-state-changed)
    * Min AVM version: 13
    */
@@ -3748,6 +3749,7 @@ export const TimeTravel = {
   /**
    * round X and status Y of the first change of key B of app A's global state between rounds C and D, and Z its new value (0 if deleted or unchanged)
    * POST /v2/query only (non-standard fork feature), on a node that keeps history; simulate and blocks refuse a program with it. Its last two args are the range's ends, from and to, inclusive: it searches oldest first when from <= to, else newest first. Status: 0 no change, 1 created, 2 changed, 3 deleted. Costs 20 more for each version it examined. Fails if from or to is after the query round or before the history's first round. A search reads at most max-scan-step-bytes of history: then status is 4, and X the round to resume from, as from. The searches of a call read at most max-call-scan-bytes in all; a search once they are spent fails the call.
+   * Z has the key's type only when Y is 1 or 2: otherwise it is the uint64 0, also for the Bytes variant, so check Y before using Z. Z is bytes or uint64 as the key holds, whichever variant is called.
    * @see Native TEAL opcode: [`tt_global_key_change`](https://github.com/d13co/dt-algorand/blob/dtalgorand/ledger/timetravel/README.md#when-state-changed)
    * Min AVM version: 13
    */
@@ -3778,6 +3780,7 @@ export const TimeTravel = {
   /**
    * round X and status Y of the first change of key C of account A's local state of app B between rounds D and E, and Z its new value (0 if deleted or unchanged)
    * POST /v2/query only (non-standard fork feature), on a node that keeps history; simulate and blocks refuse a program with it. Its last two args are the range's ends, from and to, inclusive: it searches oldest first when from <= to, else newest first. Status: 0 no change, 1 created, 2 changed, 3 deleted. Costs 20 more for each version it examined. Fails if from or to is after the query round or before the history's first round. A search reads at most max-scan-step-bytes of history: then status is 4, and X the round to resume from, as from. The searches of a call read at most max-call-scan-bytes in all; a search once they are spent fails the call.
+   * Z has the key's type only when Y is 1 or 2: otherwise it is the uint64 0, also for the Bytes variant, so check Y before using Z. Z is bytes or uint64 as the key holds, whichever variant is called.
    * @see Native TEAL opcode: [`tt_local_key_change`](https://github.com/d13co/dt-algorand/blob/dtalgorand/ledger/timetravel/README.md#when-state-changed)
    * Min AVM version: 13
    */
@@ -3788,6 +3791,7 @@ export const TimeTravel = {
   /**
    * round X and status Y of the first change of key C of account A's local state of app B between rounds D and E, and Z its new value (0 if deleted or unchanged)
    * POST /v2/query only (non-standard fork feature), on a node that keeps history; simulate and blocks refuse a program with it. Its last two args are the range's ends, from and to, inclusive: it searches oldest first when from <= to, else newest first. Status: 0 no change, 1 created, 2 changed, 3 deleted. Costs 20 more for each version it examined. Fails if from or to is after the query round or before the history's first round. A search reads at most max-scan-step-bytes of history: then status is 4, and X the round to resume from, as from. The searches of a call read at most max-call-scan-bytes in all; a search once they are spent fails the call.
+   * Z has the key's type only when Y is 1 or 2: otherwise it is the uint64 0, also for the Bytes variant, so check Y before using Z. Z is bytes or uint64 as the key holds, whichever variant is called.
    * @see Native TEAL opcode: [`tt_local_key_change`](https://github.com/d13co/dt-algorand/blob/dtalgorand/ledger/timetravel/README.md#when-state-changed)
    * Min AVM version: 13
    */

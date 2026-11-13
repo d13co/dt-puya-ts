@@ -125,11 +125,17 @@ contract TimeTravelContract
     #[gRnd, gStatus, gValue]: readonly [uint64, uint64, uint64] = #[($6 = tt_global_key_change(app, "counter", from, to)).0, $6.1, $6.2]
     total: uint64 = total + gRnd + gStatus + gValue
     #[nRnd, nStatus, nName]: readonly [uint64, uint64, bytes] = #[($7 = tt_global_key_change(app, "name", from, to)).0, $7.1, $7.2]
-    total: uint64 = total + nRnd + nStatus + len(nName)
+    total: uint64 = total + nRnd + nStatus
+    if (nStatus == 1 or nStatus == 2) {
+      total: uint64 = total + len(nName)
+    }
     #[lRnd, lStatus, lValue]: readonly [uint64, uint64, uint64] = #[($8 = tt_local_key_change(acct, app, "n", from, to)).0, $8.1, $8.2]
     total: uint64 = total + lRnd + lStatus + lValue
     #[sRnd, sStatus, sValue]: readonly [uint64, uint64, bytes] = #[($9 = tt_local_key_change(acct, app, "s", from, to)).0, $9.1, $9.2]
-    total: uint64 = total + sRnd + sStatus + len(sValue)
+    total: uint64 = total + sRnd + sStatus
+    if (sStatus == 1 or sStatus == 2) {
+      total: uint64 = total + len(sValue)
+    }
     #[pRnd, pStatus, pName]: readonly [uint64, uint64, bytes] = #[($10 = tt_box_prefix_change(app, "it", from, to)).0, $10.1, $10.2]
     total: uint64 = total + pRnd + pStatus + len(pName)
     return total

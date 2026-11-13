@@ -543,7 +543,7 @@ subroutine _puya_lib.arc4.dynamic_assert_index(array: bytes, index: uint64) -> v
         return 
 
 subroutine tests/approvals/time-travel.algo.ts::goBack(rnd: uint64) -> void:
-    block@0: // L123
+    block@0: // L127
         (tt_seek rnd#0)
         return 
 
@@ -987,37 +987,57 @@ subroutine tests/approvals/time-travel.algo.ts::TimeTravelContract.changes(acct:
         let nStatus#0: uint64 = awst_tmp%16#0
         let nName#0: bytes = awst_tmp%17#0
         let tmp%15#0: uint64 = (+ nRnd#0 nStatus#0)
-        let tmp%16#0: uint64 = (len nName#0)
-        let tmp%17#0: uint64 = (+ tmp%15#0 tmp%16#0)
-        let tmp%18#0: uint64 = (+ total#7 tmp%17#0)
-        let total#8: uint64 = tmp%18#0
+        let tmp%16#0: uint64 = (+ total#7 tmp%15#0)
+        let total#8: uint64 = tmp%16#0
+        let tmp%17#0: bool = (== nStatus#0 1u)
+        goto tmp%17#0 ? block@2 : block@1
+    block@1: // or_contd_L114
+        let tmp%18#0: bool = (== nStatus#0 2u)
+        goto tmp%18#0 ? block@2 : block@3
+    block@2: // if_body_L114
+        let tmp%19#0: uint64 = (len nName#0)
+        let tmp%20#0: uint64 = (+ total#8 tmp%19#0)
+        let total#10: uint64 = tmp%20#0
+        goto block@3
+    block@3: // after_if_else_L114
+        let total#11: uint64 = φ(total#8 <- block@1, total#10 <- block@2)
         let (awst_tmp%18#0: uint64, awst_tmp%19#0: uint64, awst_tmp%20#0: uint64) = (tt_local_key_change acct#0 app#0 "n" from#0 to#0)
         let lRnd#0: uint64 = awst_tmp%18#0
         let lStatus#0: uint64 = awst_tmp%19#0
         let lValue#0: uint64 = awst_tmp%20#0
-        let tmp%19#0: uint64 = (+ lRnd#0 lStatus#0)
-        let tmp%20#0: uint64 = (+ tmp%19#0 lValue#0)
-        let tmp%21#0: uint64 = (+ total#8 tmp%20#0)
-        let total#9: uint64 = tmp%21#0
+        let tmp%21#0: uint64 = (+ lRnd#0 lStatus#0)
+        let tmp%22#0: uint64 = (+ tmp%21#0 lValue#0)
+        let tmp%23#0: uint64 = (+ total#11 tmp%22#0)
+        let total#12: uint64 = tmp%23#0
         let (awst_tmp%21#0: uint64, awst_tmp%22#0: uint64, awst_tmp%23#0: bytes) = (tt_local_key_change acct#0 app#0 "s" from#0 to#0)
         let sRnd#0: uint64 = awst_tmp%21#0
         let sStatus#0: uint64 = awst_tmp%22#0
         let sValue#0: bytes = awst_tmp%23#0
-        let tmp%22#0: uint64 = (+ sRnd#0 sStatus#0)
-        let tmp%23#0: uint64 = (len sValue#0)
-        let tmp%24#0: uint64 = (+ tmp%22#0 tmp%23#0)
-        let tmp%25#0: uint64 = (+ total#9 tmp%24#0)
-        let total#10: uint64 = tmp%25#0
+        let tmp%24#0: uint64 = (+ sRnd#0 sStatus#0)
+        let tmp%25#0: uint64 = (+ total#12 tmp%24#0)
+        let total#13: uint64 = tmp%25#0
+        let tmp%26#0: bool = (== sStatus#0 1u)
+        goto tmp%26#0 ? block@5 : block@4
+    block@4: // or_contd_L120
+        let tmp%27#0: bool = (== sStatus#0 2u)
+        goto tmp%27#0 ? block@5 : block@6
+    block@5: // if_body_L120
+        let tmp%28#0: uint64 = (len sValue#0)
+        let tmp%29#0: uint64 = (+ total#13 tmp%28#0)
+        let total#15: uint64 = tmp%29#0
+        goto block@6
+    block@6: // after_if_else_L120
+        let total#16: uint64 = φ(total#13 <- block@4, total#15 <- block@5)
         let (awst_tmp%24#0: uint64, awst_tmp%25#0: uint64, awst_tmp%26#0: bytes) = (tt_box_prefix_change app#0 "it" from#0 to#0)
         let pRnd#0: uint64 = awst_tmp%24#0
         let pStatus#0: uint64 = awst_tmp%25#0
         let pName#0: bytes = awst_tmp%26#0
-        let tmp%26#0: uint64 = (+ pRnd#0 pStatus#0)
-        let tmp%27#0: uint64 = (len pName#0)
-        let tmp%28#0: uint64 = (+ tmp%26#0 tmp%27#0)
-        let tmp%29#0: uint64 = (+ total#10 tmp%28#0)
-        let total#11: uint64 = tmp%29#0
-        return total#11
+        let tmp%30#0: uint64 = (+ pRnd#0 pStatus#0)
+        let tmp%31#0: uint64 = (len pName#0)
+        let tmp%32#0: uint64 = (+ tmp%30#0 tmp%31#0)
+        let tmp%33#0: uint64 = (+ total#16 tmp%32#0)
+        let total#17: uint64 = tmp%33#0
+        return total#17
 
 subroutine tests/approvals/time-travel.algo.ts::TimeTravelContract.__algots__.defaultCreate() -> void:
     block@0: // L12

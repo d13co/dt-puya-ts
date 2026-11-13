@@ -6,6 +6,10 @@
 main:
     intcblock 8 1 0 2
     bytecblock 0x151f7c75 "data" "items" "counter" 0x00 "pt"
+    intc_2 // 0
+    dup
+    pushbytes ""
+    dup
     txn ApplicationID
     bnz main_after_if_else@2
     // tests/approvals/time-travel.algo.ts:14
@@ -34,7 +38,7 @@ main_changes_route@17:
     // tests/approvals/time-travel.algo.ts:95
     // changes(acct: Account, asset: Asset, app: Application, from: uint64, to: uint64): uint64 {
     txna ApplicationArgs 1
-    dup
+    dupn 2
     len
     pushint 32
     ==
@@ -53,6 +57,9 @@ main_changes_route@17:
     ==
     assert // invalid number of bytes for arc4.uint64
     btoi
+    dup
+    cover 2
+    cover 3
     txna ApplicationArgs 4
     dup
     len
@@ -60,6 +67,8 @@ main_changes_route@17:
     ==
     assert // invalid number of bytes for arc4.uint64
     btoi
+    dup
+    cover 5
     txna ApplicationArgs 5
     dup
     len
@@ -67,6 +76,8 @@ main_changes_route@17:
     ==
     assert // invalid number of bytes for arc4.uint64
     btoi
+    dup
+    cover 7
     // tests/approvals/time-travel.algo.ts:97
     // let [rnd, status] = op.TimeTravel.acctChange(acct, from, to)
     dig 4
@@ -79,7 +90,7 @@ main_changes_route@17:
     // tests/approvals/time-travel.algo.ts:99
     // ;[rnd, status] = op.TimeTravel.holdingChange(acct, asset, from, to)
     dig 5
-    dig 5
+    dig 4
     dig 4
     dig 4
     tt_holding_change
@@ -89,8 +100,8 @@ main_changes_route@17:
     +
     // tests/approvals/time-travel.algo.ts:101
     // ;[rnd, status] = op.TimeTravel.localChange(acct, app, from, to)
+    uncover 5
     dig 5
-    dig 4
     dig 4
     dig 4
     tt_local_change
@@ -100,7 +111,7 @@ main_changes_route@17:
     +
     // tests/approvals/time-travel.algo.ts:103
     // ;[rnd, status] = op.TimeTravel.assetChange(asset, from, to)
-    uncover 4
+    uncover 3
     dig 3
     dig 3
     tt_asset_change
@@ -144,57 +155,107 @@ main_changes_route@17:
     +
     // tests/approvals/time-travel.algo.ts:111
     // const [nRnd, nStatus, nName] = op.TimeTravel.globalKeyChangeBytes(app, Bytes('name'), from, to)
-    dig 3
+    uncover 3
     pushbytes "name"
-    dig 4
-    dig 4
+    uncover 4
+    uncover 4
     tt_global_key_change
-    // tests/approvals/time-travel.algo.ts:112
-    // total += nRnd + nStatus + nName.length
+    bury 11
+    dup
     cover 2
+    bury 9
+    // tests/approvals/time-travel.algo.ts:112
+    // total += nRnd + nStatus
+    dig 1
+    +
+    uncover 2
     +
     swap
+    // tests/approvals/time-travel.algo.ts:114
+    // if (nStatus === 1 || nStatus === 2) total += nName.length
+    intc_1 // 1
+    ==
+    bnz main_if_body@26
+    dig 6
+    intc_3 // 2
+    ==
+    bz main_after_if_else@27
+
+main_if_body@26:
+    // tests/approvals/time-travel.algo.ts:114
+    // if (nStatus === 1 || nStatus === 2) total += nName.length
+    dig 8
     len
     +
-    +
-    // tests/approvals/time-travel.algo.ts:113
+
+main_after_if_else@27:
+    // tests/approvals/time-travel.algo.ts:115
     // const [lRnd, lStatus, lValue] = op.TimeTravel.localKeyChangeUint64(acct, app, Bytes('n'), from, to)
-    dig 4
-    dig 4
+    uncover 4
+    dup
+    dig 3
+    dup
+    cover 3
     pushbytes "n"
-    dig 5
-    dig 5
+    dig 7
+    dup
+    cover 6
+    dig 10
+    dup
+    cover 8
     tt_local_key_change
-    // tests/approvals/time-travel.algo.ts:114
+    // tests/approvals/time-travel.algo.ts:116
     // total += lRnd + lStatus + lValue
     cover 2
     +
     +
-    +
-    // tests/approvals/time-travel.algo.ts:115
-    // const [sRnd, sStatus, sValue] = op.TimeTravel.localKeyChangeBytes(acct, app, Bytes('s'), from, to)
-    uncover 4
-    dig 4
-    pushbytes "s"
-    dig 5
-    dig 5
-    tt_local_key_change
-    // tests/approvals/time-travel.algo.ts:116
-    // total += sRnd + sStatus + sValue.length
-    cover 2
-    +
-    swap
-    len
-    +
+    uncover 5
     +
     // tests/approvals/time-travel.algo.ts:117
-    // const [pRnd, pStatus, pName] = op.TimeTravel.boxPrefixChange(app, Bytes('it'), from, to)
-    uncover 3
-    pushbytes "it"
+    // const [sRnd, sStatus, sValue] = op.TimeTravel.localKeyChangeBytes(acct, app, Bytes('s'), from, to)
+    swap
+    uncover 2
+    pushbytes "s"
     uncover 4
+    uncover 5
+    tt_local_key_change
+    bury 9
+    dup
+    cover 2
+    bury 7
+    // tests/approvals/time-travel.algo.ts:118
+    // total += sRnd + sStatus
+    dig 1
+    +
+    uncover 2
+    +
+    swap
+    // tests/approvals/time-travel.algo.ts:120
+    // if (sStatus === 1 || sStatus === 2) total += sValue.length
+    intc_1 // 1
+    ==
+    bnz main_if_body@29
+    dig 4
+    intc_3 // 2
+    ==
+    bz main_after_if_else@30
+
+main_if_body@29:
+    // tests/approvals/time-travel.algo.ts:120
+    // if (sStatus === 1 || sStatus === 2) total += sValue.length
+    dig 6
+    len
+    +
+
+main_after_if_else@30:
+    // tests/approvals/time-travel.algo.ts:121
+    // const [pRnd, pStatus, pName] = op.TimeTravel.boxPrefixChange(app, Bytes('it'), from, to)
+    swap
+    pushbytes "it"
+    uncover 3
     uncover 4
     tt_box_prefix_change
-    // tests/approvals/time-travel.algo.ts:118
+    // tests/approvals/time-travel.algo.ts:122
     // total += pRnd + pStatus + pName.length
     cover 2
     +
@@ -498,7 +559,7 @@ main_firstItemChanged_route@10:
     // const now = clone(this.items.value)
     box_get
     assert // Box must have value
-    // tests/approvals/time-travel.algo.ts:124
+    // tests/approvals/time-travel.algo.ts:128
     // op.TimeTravel.seek(rnd)
     swap
     tt_seek

@@ -256,24 +256,42 @@ main @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalP
         let total#7: uint64 = (+ total#6 tmp%13#0)
         let (nRnd#0: uint64, nStatus#0: uint64, nName#0: bytes) = (tt_global_key_change app#0 "name" from#0 to#0)
         let tmp%15#0: uint64 = (+ nRnd#0 nStatus#0)
-        let tmp%16#0: uint64 = (len nName#0)
-        let tmp%17#0: uint64 = (+ tmp%15#0 tmp%16#0)
-        let total#8: uint64 = (+ total#7 tmp%17#0)
+        let total#8: uint64 = (+ total#7 tmp%15#0)
+        let tmp%17#0: bool = (== nStatus#0 1u)
+        goto tmp%17#0 ? block@26 : block@25
+    block@25: // or_contd_L114
+        let tmp%18#0: bool = (== nStatus#0 2u)
+        goto tmp%18#0 ? block@26 : block@27
+    block@26: // if_body_L114
+        let tmp%19#0: uint64 = (len nName#0)
+        let total#10: uint64 = (+ total#8 tmp%19#0)
+        goto block@27
+    block@27: // after_if_else_L114
+        let total#11: uint64 = φ(total#8 <- block@25, total#10 <- block@26)
         let (lRnd#0: uint64, lStatus#0: uint64, lValue#0: uint64) = (tt_local_key_change acct#0 app#0 "n" from#0 to#0)
-        let tmp%19#0: uint64 = (+ lRnd#0 lStatus#0)
-        let tmp%20#0: uint64 = (+ tmp%19#0 lValue#0)
-        let total#9: uint64 = (+ total#8 tmp%20#0)
+        let tmp%21#0: uint64 = (+ lRnd#0 lStatus#0)
+        let tmp%22#0: uint64 = (+ tmp%21#0 lValue#0)
+        let total#12: uint64 = (+ total#11 tmp%22#0)
         let (sRnd#0: uint64, sStatus#0: uint64, sValue#0: bytes) = (tt_local_key_change acct#0 app#0 "s" from#0 to#0)
-        let tmp%22#0: uint64 = (+ sRnd#0 sStatus#0)
-        let tmp%23#0: uint64 = (len sValue#0)
-        let tmp%24#0: uint64 = (+ tmp%22#0 tmp%23#0)
-        let total#10: uint64 = (+ total#9 tmp%24#0)
+        let tmp%24#0: uint64 = (+ sRnd#0 sStatus#0)
+        let total#13: uint64 = (+ total#12 tmp%24#0)
+        let tmp%26#0: bool = (== sStatus#0 1u)
+        goto tmp%26#0 ? block@29 : block@28
+    block@28: // or_contd_L120
+        let tmp%27#0: bool = (== sStatus#0 2u)
+        goto tmp%27#0 ? block@29 : block@30
+    block@29: // if_body_L120
+        let tmp%28#0: uint64 = (len sValue#0)
+        let total#15: uint64 = (+ total#13 tmp%28#0)
+        goto block@30
+    block@30: // after_if_else_L120
+        let total#16: uint64 = φ(total#13 <- block@28, total#15 <- block@29)
         let (pRnd#0: uint64, pStatus#0: uint64, pName#0: bytes) = (tt_box_prefix_change app#0 "it" from#0 to#0)
-        let tmp%26#0: uint64 = (+ pRnd#0 pStatus#0)
-        let tmp%27#0: uint64 = (len pName#0)
-        let tmp%28#0: uint64 = (+ tmp%26#0 tmp%27#0)
-        let total#11: uint64 = (+ total#10 tmp%28#0)
-        let aggregate%val_as_bytes%6#0: bytes[8] = (itob total#11)
+        let tmp%30#0: uint64 = (+ pRnd#0 pStatus#0)
+        let tmp%31#0: uint64 = (len pName#0)
+        let tmp%32#0: uint64 = (+ tmp%30#0 tmp%31#0)
+        let total#17: uint64 = (+ total#16 tmp%32#0)
+        let aggregate%val_as_bytes%6#0: bytes[8] = (itob total#17)
         let tmp%12#0: bytes = (concat 0x151f7c75 aggregate%val_as_bytes%6#0)
         (log tmp%12#0)
         exit 1u

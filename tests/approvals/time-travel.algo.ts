@@ -109,11 +109,15 @@ export class TimeTravelContract extends Contract {
     const [gRnd, gStatus, gValue] = op.TimeTravel.globalKeyChangeUint64(app, Bytes('counter'), from, to)
     total += gRnd + gStatus + gValue
     const [nRnd, nStatus, nName] = op.TimeTravel.globalKeyChangeBytes(app, Bytes('name'), from, to)
-    total += nRnd + nStatus + nName.length
+    total += nRnd + nStatus
+    // the value is bytes only when the key was created or changed: else it is the uint64 0
+    if (nStatus === 1 || nStatus === 2) total += nName.length
     const [lRnd, lStatus, lValue] = op.TimeTravel.localKeyChangeUint64(acct, app, Bytes('n'), from, to)
     total += lRnd + lStatus + lValue
     const [sRnd, sStatus, sValue] = op.TimeTravel.localKeyChangeBytes(acct, app, Bytes('s'), from, to)
-    total += sRnd + sStatus + sValue.length
+    total += sRnd + sStatus
+    // the value is bytes only when the key was created or changed: else it is the uint64 0
+    if (sStatus === 1 || sStatus === 2) total += sValue.length
     const [pRnd, pStatus, pName] = op.TimeTravel.boxPrefixChange(app, Bytes('it'), from, to)
     total += pRnd + pStatus + pName.length
     return total

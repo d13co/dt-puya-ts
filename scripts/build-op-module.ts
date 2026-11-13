@@ -286,7 +286,18 @@ const RENAMED_OPCODES_MAP = new Map([
 type OpNameConfig = {
   nameOverride?: string
   prefix?: string
+  /** Where the op is documented, if not in the AVM's opcode docs */
+  docUrl?: string
+  /** Docs added after the langspec's */
+  extraDocs?: string[]
 }
+
+// the time-travel ops are dt-algorand's, and documented there rather than in the AVM's docs
+const TIME_TRAVEL_DOC_URL = 'https://github.com/d13co/dt-algorand/blob/dtalgorand/ledger/timetravel/README.md'
+const TIME_TRAVEL_CHANGE_DOC_URL = `${TIME_TRAVEL_DOC_URL}#when-state-changed`
+const TIME_TRAVEL_KEY_VALUE_DOCS = [
+  "Z has the key's type only when Y is 1 or 2: otherwise it is the uint64 0, also for the Bytes variant, so check Y before using Z. Z is bytes or uint64 as the key holds, whichever variant is called.",
+]
 
 const GROUPED_OPCODES: { name: string; doc: string; ops: { [key: string]: OpNameConfig } }[] = [
   {
@@ -343,16 +354,20 @@ const GROUPED_OPCODES: { name: string; doc: string; ops: { [key: string]: OpName
     name: 'TimeTravel',
     doc: 'Move reads to a past round, or find when state changed. dt-algorand only: these ops run only in its POST /v2/query, and simulate and blocks refuse a program with them',
     ops: {
-      tt_seek: { nameOverride: 'seek' },
-      tt_acct_change: { nameOverride: 'acct_change' },
-      tt_holding_change: { nameOverride: 'holding_change' },
-      tt_local_change: { nameOverride: 'local_change' },
-      tt_asset_change: { nameOverride: 'asset_change' },
-      tt_app_change: { nameOverride: 'app_change' },
-      tt_box_change: { nameOverride: 'box_change' },
-      tt_global_key_change: { nameOverride: 'global_key_change' },
-      tt_local_key_change: { nameOverride: 'local_key_change' },
-      tt_box_prefix_change: { nameOverride: 'box_prefix_change' },
+      tt_seek: { nameOverride: 'seek', docUrl: `${TIME_TRAVEL_DOC_URL}#time-travel-inside-a-call` },
+      tt_acct_change: { nameOverride: 'acct_change', docUrl: TIME_TRAVEL_CHANGE_DOC_URL },
+      tt_holding_change: { nameOverride: 'holding_change', docUrl: TIME_TRAVEL_CHANGE_DOC_URL },
+      tt_local_change: { nameOverride: 'local_change', docUrl: TIME_TRAVEL_CHANGE_DOC_URL },
+      tt_asset_change: { nameOverride: 'asset_change', docUrl: TIME_TRAVEL_CHANGE_DOC_URL },
+      tt_app_change: { nameOverride: 'app_change', docUrl: TIME_TRAVEL_CHANGE_DOC_URL },
+      tt_box_change: { nameOverride: 'box_change', docUrl: TIME_TRAVEL_CHANGE_DOC_URL },
+      tt_global_key_change: {
+        nameOverride: 'global_key_change',
+        docUrl: TIME_TRAVEL_CHANGE_DOC_URL,
+        extraDocs: TIME_TRAVEL_KEY_VALUE_DOCS,
+      },
+      tt_local_key_change: { nameOverride: 'local_key_change', docUrl: TIME_TRAVEL_CHANGE_DOC_URL, extraDocs: TIME_TRAVEL_KEY_VALUE_DOCS },
+      tt_box_prefix_change: { nameOverride: 'box_prefix_change', docUrl: TIME_TRAVEL_CHANGE_DOC_URL },
     },
   },
   {
@@ -569,7 +584,7 @@ export function buildOpModule() {
             type: genericOpCode?.inputArgs.find((a) => a.name === i.name)?.type || getInputTypes(getMappedType(i.stack_type, null)),
           })),
           returnTypes: genericOpCode?.returnTypes || def.stack_outputs.map((o) => getMappedType(o.stack_type, null)),
-          docs: getOpDocs(def),
+          docs: getOpDocs(def, opNameConfig),
         }),
       )
     }
@@ -748,7 +763,7 @@ function getMappedType(t: string | null, enumName: string | null): AlgoTsType {
   return mappedType
 }
 
-const getOpDocs = (op: Op): string[] => [
+const getOpDocs = (op: Op, config: OpNameConfig): string[] => [
   ...(op.doc ?? [])
     .filter(Boolean)
     .map((d: string) =>
@@ -757,14 +772,6 @@ const getOpDocs = (op: Op): string[] => [
         .map((s) => s.trimEnd()),
     )
     .flat(),
-  `@see Native TEAL opcode: [\`${op.name}\`](${getOpDocUrl(op.name)})`,
+  ...(config.extraDocs ?? []),
+  `@see Native TEAL opcode: [\`${op.name}\`](${config.docUrl ?? `https://dev.algorand.co/reference/algorand-teal/opcodes#${op.name}`})`,
 ]
-
-// the time-travel ops are dt-algorand's, and documented there rather than in the AVM's docs
-const TIME_TRAVEL_DOC_URL = 'https://github.com/d13co/dt-algorand/blob/dtalgorand/ledger/timetravel/README.md'
-
-const getOpDocUrl = (name: string): string => {
-  if (name === 'tt_seek') return `${TIME_TRAVEL_DOC_URL}#time-travel-inside-a-call`
-  if (name.startsWith('tt_')) return `${TIME_TRAVEL_DOC_URL}#when-state-changed`
-  return `https://dev.algorand.co/reference/algorand-teal/opcodes#${name}`
-}

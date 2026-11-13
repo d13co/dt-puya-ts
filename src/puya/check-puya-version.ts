@@ -12,6 +12,20 @@ enum VersionCompareVerdict {
   OlderRevision = 'OlderRevision',
   NewerRevision = 'NewerRevision',
   SuffixMismatch = 'SuffixMismatch',
+  NotDtPuya = 'NotDtPuya',
+  OlderDtRelease = 'OlderDtRelease',
+  NewerDtRelease = 'NewerDtRelease',
+}
+
+/** The release of dt-puya in a version's suffix: -dt.1.0.0 is [1, 0, 0] */
+function parseDtRelease(suffix: string): [number, number, number] | undefined {
+  const matched = /^-dt\.(\d+)\.(\d+)\.(\d+)$/.exec(suffix)
+  return matched ? [Number(matched[1]), Number(matched[2]), Number(matched[3])] : undefined
+}
+
+function compareReleases(a: readonly number[], b: readonly number[]): number {
+  for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return a[i] - b[i]
+  return 0
 }
 
 async function comparePuyaVersion(puyaPath: string): Promise<{
@@ -33,12 +47,20 @@ async function comparePuyaVersion(puyaPath: string): Promise<{
 
   // Compare
   const { major, minor, rev, suffix } = parseSemVer(target)
+  // dt-puya-ts targets a dt-puya release (5.10.1-dt.1.0.0): a puya that isn't dt-puya lacks the ops
+  // dt-puya adds, whatever its version
+  const targetDt = parseDtRelease(suffix)
+  const foundDt = parseDtRelease(ver.suffix)
+  if (targetDt && !foundDt) return { verdict: VersionCompareVerdict.NotDtPuya, target, found: ver.formatted }
   if (ver.major !== major) return { verdict: VersionCompareVerdict.MajorMismatch, target, found: ver.formatted }
   if (ver.minor !== minor) return { verdict: VersionCompareVerdict.MinorMismatch, target, found: ver.formatted }
   if (ver.rev < rev) return { verdict: VersionCompareVerdict.OlderRevision, target, found: ver.formatted }
   if (ver.rev > rev) return { verdict: VersionCompareVerdict.NewerRevision, target, found: ver.formatted }
-  // dt-puya-ts targets a dt-puya release (5.10.1-dt.1.0.0): a puya without the same suffix
-  // may lack the ops dt-puya adds
+  if (targetDt && foundDt) {
+    const cmp = compareReleases(foundDt, targetDt)
+    if (cmp < 0) return { verdict: VersionCompareVerdict.OlderDtRelease, target, found: ver.formatted }
+    if (cmp > 0) return { verdict: VersionCompareVerdict.NewerDtRelease, target, found: ver.formatted }
+  }
   if (ver.suffix !== suffix) return { verdict: VersionCompareVerdict.SuffixMismatch, target, found: ver.formatted }
   return { verdict: VersionCompareVerdict.ExactMatch, target, found: ver.formatted }
 }
@@ -57,6 +79,18 @@ export async function checkPuyaVersion(puyaPath: string) {
         undefined,
         `Version of Puya at ${puyaPath} (${result.found}) does not match targeted version (${result.target}). There may be compatibility issues.`,
       )
+      break
+    case VersionCompareVerdict.NotDtPuya:
+      logger.warn(
+        undefined,
+        `Puya at ${puyaPath} (${result.found}) is not dt-puya: the targeted version is ${result.target}. Contracts that use op.TimeTravel will not compile with it.`,
+      )
+      break
+    case VersionCompareVerdict.OlderDtRelease:
+      logger.warn(undefined, `dt-puya at ${puyaPath} (${result.found}) is an older release than the targeted one (${result.target})`)
+      break
+    case VersionCompareVerdict.NewerDtRelease:
+      logger.debug(undefined, `dt-puya at ${puyaPath} (${result.found}) is a newer release than the targeted one (${result.target})`)
       break
     case VersionCompareVerdict.OlderRevision:
       logger.warn(undefined, `Revision of Puya at ${puyaPath} (${result.found}) is older than the targeted revision (${result.target})`)

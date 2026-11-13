@@ -1,0 +1,1261 @@
+#pragma version 13
+#pragma typetrack false
+#pragma autosalt false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 8 0 1 2
+    bytecblock 0x151f7c75 "data" "items" 0x "counter" 0x00 "pt"
+    b main_block@0
+
+main_block@0:
+    txn ApplicationID
+    bnz main_after_if_else@2
+    b main_if_body@1
+
+main_if_body@1:
+    callsub constructor
+    b main_after_if_else@2
+
+main_after_if_else@2:
+    b main_block@3
+
+main_block@3:
+    // tests/approvals/time-travel.algo.ts:12-13
+    // @contract({ name: 'TimeTravelContract', avmVersion: 13 })
+    // export class TimeTravelContract extends Contract {
+    txn NumAppArgs
+    intc_1 // 0
+    !=
+    bz main___algots__.defaultCreate@21
+    b main_abi_routing@4
+
+main_abi_routing@4:
+    // tests/approvals/time-travel.algo.ts:12-13
+    // @contract({ name: 'TimeTravelContract', avmVersion: 13 })
+    // export class TimeTravelContract extends Contract {
+    txn OnCompletion
+    intc_1 // NoOp
+    ==
+    assert
+    txn ApplicationID
+    intc_1 // 0
+    !=
+    bz main_create_NoOp@19
+    b main_call_NoOp@5
+
+main_call_NoOp@5:
+    // tests/approvals/time-travel.algo.ts:12-13
+    // @contract({ name: 'TimeTravelContract', avmVersion: 13 })
+    // export class TimeTravelContract extends Contract {
+    txna ApplicationArgs 0
+    pushbytes 0x659c9d24 // method "roundAt(uint64)uint64"
+    pushbytes 0x507165f9 // method "roundBefore(uint64)uint64"
+    pushbytes 0x790020b2 // method "counterThenAndNow(uint64)(uint64,uint64)"
+    pushbytes 0xbbbf9355 // method "dataChanged(uint64)bool"
+    pushbytes 0x36d383b9 // method "firstItemChanged(uint64)bool"
+    pushbytes 0xe5b7ba19 // method "firstItemNow(uint64)uint64"
+    pushbytes 0x5b08abf7 // method "appendThenWriteBack(uint64,uint64)void"
+    pushbytes 0x2af7db09 // method "setThenWriteBack(uint64,uint64)void"
+    pushbytes 0x77561254 // method "timestamps(uint64,uint64)uint64"
+    pushbytes 0x48085bc0 // method "dataExisted(uint64)byte[]"
+    pushbytes 0x0363a704 // method "dataExistsThen(uint64)bool"
+    pushbytes 0xfbb80e0f // method "changes(address,uint64,uint64,uint64,uint64)uint64"
+    uncover 12
+    match main_roundAt_route@6 main_roundBefore_route@7 main_counterThenAndNow_route@8 main_dataChanged_route@9 main_firstItemChanged_route@10 main_firstItemNow_route@11 main_appendThenWriteBack_route@12 main_setThenWriteBack_route@13 main_timestamps_route@14 main_dataExisted_route@15 main_dataExistsThen_route@16 main_changes_route@17
+    b main_switch_case_next@18
+
+main_switch_case_next@18:
+    b main_after_if_else@20
+
+main_after_if_else@20:
+    b main_after_if_else@22
+
+main_after_if_else@22:
+    // tests/approvals/time-travel.algo.ts:12-13
+    // @contract({ name: 'TimeTravelContract', avmVersion: 13 })
+    // export class TimeTravelContract extends Contract {
+    err
+
+main_changes_route@17:
+    // tests/approvals/time-travel.algo.ts:95
+    // changes(acct: Account, asset: Asset, app: Application, from: uint64, to: uint64): uint64 {
+    callsub changes
+    b main_switch_case_next@18
+
+main_dataExistsThen_route@16:
+    // tests/approvals/time-travel.algo.ts:89
+    // dataExistsThen(rnd: uint64): boolean {
+    callsub dataExistsThen
+    b main_switch_case_next@18
+
+main_dataExisted_route@15:
+    // tests/approvals/time-travel.algo.ts:81
+    // dataExisted(rnd: uint64): bytes {
+    callsub dataExisted
+    b main_switch_case_next@18
+
+main_timestamps_route@14:
+    // tests/approvals/time-travel.algo.ts:74
+    // timestamps(rnd: uint64, of: uint64): uint64 {
+    callsub timestamps
+    b main_switch_case_next@18
+
+main_setThenWriteBack_route@13:
+    // tests/approvals/time-travel.algo.ts:67
+    // setThenWriteBack(rnd: uint64, x: uint64): void {
+    callsub setThenWriteBack
+    b main_switch_case_next@18
+
+main_appendThenWriteBack_route@12:
+    // tests/approvals/time-travel.algo.ts:60
+    // appendThenWriteBack(rnd: uint64, x: uint64): void {
+    callsub appendThenWriteBack
+    b main_switch_case_next@18
+
+main_firstItemNow_route@11:
+    // tests/approvals/time-travel.algo.ts:54
+    // firstItemNow(rnd: uint64): uint64 {
+    callsub firstItemNow
+    b main_switch_case_next@18
+
+main_firstItemChanged_route@10:
+    // tests/approvals/time-travel.algo.ts:47
+    // firstItemChanged(rnd: uint64): boolean {
+    callsub firstItemChanged
+    b main_switch_case_next@18
+
+main_dataChanged_route@9:
+    // tests/approvals/time-travel.algo.ts:40
+    // dataChanged(rnd: uint64): boolean {
+    callsub dataChanged
+    b main_switch_case_next@18
+
+main_counterThenAndNow_route@8:
+    // tests/approvals/time-travel.algo.ts:30
+    // counterThenAndNow(rnd: uint64): [uint64, uint64] {
+    callsub counterThenAndNow
+    b main_switch_case_next@18
+
+main_roundBefore_route@7:
+    // tests/approvals/time-travel.algo.ts:24
+    // roundBefore(rnd: uint64): uint64 {
+    callsub roundBefore
+    b main_switch_case_next@18
+
+main_roundAt_route@6:
+    // tests/approvals/time-travel.algo.ts:19
+    // roundAt(rnd: uint64): uint64 {
+    callsub roundAt
+    b main_switch_case_next@18
+
+main_create_NoOp@19:
+    b main_after_if_else@20
+
+main___algots__.defaultCreate@21:
+    // tests/approvals/time-travel.algo.ts:12-13
+    // @contract({ name: 'TimeTravelContract', avmVersion: 13 })
+    // export class TimeTravelContract extends Contract {
+    txn OnCompletion
+    intc_1 // NoOp
+    ==
+    txn ApplicationID
+    intc_1 // 0
+    ==
+    &&
+    assert
+    callsub __algots__.defaultCreate
+    intc_2 // 1
+    return
+
+
+// tests/approvals/time-travel.algo.ts::goBack(rnd: uint64) -> void:
+goBack:
+    // tests/approvals/time-travel.algo.ts:127
+    // function goBack(rnd: uint64): void {
+    proto 1 0
+    b goBack_block@0
+
+goBack_block@0:
+    // tests/approvals/time-travel.algo.ts:128
+    // op.TimeTravel.seek(rnd)
+    frame_dig -1
+    tt_seek
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.roundAt[routing]() -> void:
+roundAt:
+    b roundAt_block@0
+
+roundAt_block@0:
+    // tests/approvals/time-travel.algo.ts:19
+    // roundAt(rnd: uint64): uint64 {
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    callsub tests/approvals/time-travel.algo.ts::TimeTravelContract.roundAt
+    itob
+    bytec_0 // 0x151f7c75
+    uncover 1
+    concat
+    log
+    intc_2 // 1
+    return
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.roundBefore[routing]() -> void:
+roundBefore:
+    b roundBefore_block@0
+
+roundBefore_block@0:
+    // tests/approvals/time-travel.algo.ts:24
+    // roundBefore(rnd: uint64): uint64 {
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    callsub tests/approvals/time-travel.algo.ts::TimeTravelContract.roundBefore
+    itob
+    bytec_0 // 0x151f7c75
+    uncover 1
+    concat
+    log
+    intc_2 // 1
+    return
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.counterThenAndNow[routing]() -> void:
+counterThenAndNow:
+    b counterThenAndNow_block@0
+
+counterThenAndNow_block@0:
+    // tests/approvals/time-travel.algo.ts:30
+    // counterThenAndNow(rnd: uint64): [uint64, uint64] {
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    callsub tests/approvals/time-travel.algo.ts::TimeTravelContract.counterThenAndNow
+    bytec_0 // 0x151f7c75
+    uncover 1
+    concat
+    log
+    intc_2 // 1
+    return
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.dataChanged[routing]() -> void:
+dataChanged:
+    b dataChanged_block@0
+
+dataChanged_block@0:
+    // tests/approvals/time-travel.algo.ts:40
+    // dataChanged(rnd: uint64): boolean {
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    callsub tests/approvals/time-travel.algo.ts::TimeTravelContract.dataChanged
+    bytec 5 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    uncover 1
+    concat
+    log
+    intc_2 // 1
+    return
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.firstItemChanged[routing]() -> void:
+firstItemChanged:
+    b firstItemChanged_block@0
+
+firstItemChanged_block@0:
+    // tests/approvals/time-travel.algo.ts:47
+    // firstItemChanged(rnd: uint64): boolean {
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    callsub tests/approvals/time-travel.algo.ts::TimeTravelContract.firstItemChanged
+    bytec 5 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    uncover 1
+    concat
+    log
+    intc_2 // 1
+    return
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.firstItemNow[routing]() -> void:
+firstItemNow:
+    b firstItemNow_block@0
+
+firstItemNow_block@0:
+    // tests/approvals/time-travel.algo.ts:54
+    // firstItemNow(rnd: uint64): uint64 {
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    callsub tests/approvals/time-travel.algo.ts::TimeTravelContract.firstItemNow
+    itob
+    bytec_0 // 0x151f7c75
+    uncover 1
+    concat
+    log
+    intc_2 // 1
+    return
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack[routing]() -> void:
+appendThenWriteBack:
+    b appendThenWriteBack_block@0
+
+appendThenWriteBack_block@0:
+    // tests/approvals/time-travel.algo.ts:60
+    // appendThenWriteBack(rnd: uint64, x: uint64): void {
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 2
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    callsub tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack
+    intc_2 // 1
+    return
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.setThenWriteBack[routing]() -> void:
+setThenWriteBack:
+    b setThenWriteBack_block@0
+
+setThenWriteBack_block@0:
+    // tests/approvals/time-travel.algo.ts:67
+    // setThenWriteBack(rnd: uint64, x: uint64): void {
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 2
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    callsub tests/approvals/time-travel.algo.ts::TimeTravelContract.setThenWriteBack
+    intc_2 // 1
+    return
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.timestamps[routing]() -> void:
+timestamps:
+    b timestamps_block@0
+
+timestamps_block@0:
+    // tests/approvals/time-travel.algo.ts:74
+    // timestamps(rnd: uint64, of: uint64): uint64 {
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 2
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    callsub tests/approvals/time-travel.algo.ts::TimeTravelContract.timestamps
+    itob
+    bytec_0 // 0x151f7c75
+    uncover 1
+    concat
+    log
+    intc_2 // 1
+    return
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.dataExisted[routing]() -> void:
+dataExisted:
+    b dataExisted_block@0
+
+dataExisted_block@0:
+    // tests/approvals/time-travel.algo.ts:81
+    // dataExisted(rnd: uint64): bytes {
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    callsub tests/approvals/time-travel.algo.ts::TimeTravelContract.dataExisted
+    dup
+    len
+    itob
+    extract 6 2
+    uncover 1
+    concat
+    bytec_0 // 0x151f7c75
+    uncover 1
+    concat
+    log
+    intc_2 // 1
+    return
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.dataExistsThen[routing]() -> void:
+dataExistsThen:
+    b dataExistsThen_block@0
+
+dataExistsThen_block@0:
+    // tests/approvals/time-travel.algo.ts:89
+    // dataExistsThen(rnd: uint64): boolean {
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    callsub tests/approvals/time-travel.algo.ts::TimeTravelContract.dataExistsThen
+    bytec 5 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    uncover 1
+    concat
+    log
+    intc_2 // 1
+    return
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.changes[routing]() -> void:
+changes:
+    b changes_block@0
+
+changes_block@0:
+    // tests/approvals/time-travel.algo.ts:95
+    // changes(acct: Account, asset: Asset, app: Application, from: uint64, to: uint64): uint64 {
+    txna ApplicationArgs 1
+    dup
+    len
+    pushint 32
+    ==
+    assert // invalid number of bytes for arc4.static_array<arc4.uint8, 32>
+    txna ApplicationArgs 2
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 3
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 4
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 5
+    dup
+    len
+    intc_0 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    uncover 4
+    uncover 4
+    uncover 4
+    uncover 4
+    uncover 4
+    callsub tests/approvals/time-travel.algo.ts::TimeTravelContract.changes
+    itob
+    bytec_0 // 0x151f7c75
+    uncover 1
+    concat
+    log
+    intc_2 // 1
+    return
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.roundAt(rnd: uint64) -> uint64:
+tests/approvals/time-travel.algo.ts::TimeTravelContract.roundAt:
+    // tests/approvals/time-travel.algo.ts:19
+    // roundAt(rnd: uint64): uint64 {
+    proto 1 1
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.roundAt_block@0
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.roundAt_block@0:
+    // tests/approvals/time-travel.algo.ts:20
+    // op.TimeTravel.seek(rnd)
+    frame_dig -1
+    tt_seek
+    // tests/approvals/time-travel.algo.ts:21
+    // return Global.round
+    global Round
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.roundBefore(rnd: uint64) -> uint64:
+tests/approvals/time-travel.algo.ts::TimeTravelContract.roundBefore:
+    // tests/approvals/time-travel.algo.ts:24
+    // roundBefore(rnd: uint64): uint64 {
+    proto 1 1
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.roundBefore_block@0
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.roundBefore_block@0:
+    // tests/approvals/time-travel.algo.ts:25
+    // const before = Global.round
+    global Round
+    // tests/approvals/time-travel.algo.ts:26
+    // op.TimeTravel.seek(rnd)
+    frame_dig -1
+    tt_seek
+    // tests/approvals/time-travel.algo.ts:27
+    // return before
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.counterThenAndNow(rnd: uint64) -> bytes:
+tests/approvals/time-travel.algo.ts::TimeTravelContract.counterThenAndNow:
+    // tests/approvals/time-travel.algo.ts:30
+    // counterThenAndNow(rnd: uint64): [uint64, uint64] {
+    proto 1 1
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.counterThenAndNow_block@0
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.counterThenAndNow_block@0:
+    // tests/approvals/time-travel.algo.ts:32
+    // const home: uint64 = Global.round - 1
+    global Round
+    intc_2 // 1
+    -
+    // tests/approvals/time-travel.algo.ts:33
+    // const now = this.counter.value
+    intc_1 // 0
+    // tests/approvals/time-travel.algo.ts:14
+    // counter = GlobalState<uint64>({ initialValue: 0 })
+    bytec 4 // "counter"
+    // tests/approvals/time-travel.algo.ts:33
+    // const now = this.counter.value
+    app_global_get_ex
+    assert // check GlobalState exists
+    cover 1
+    // tests/approvals/time-travel.algo.ts:34
+    // op.TimeTravel.seek(rnd)
+    frame_dig -1
+    tt_seek
+    // tests/approvals/time-travel.algo.ts:35
+    // const then = this.counter.value
+    intc_1 // 0
+    // tests/approvals/time-travel.algo.ts:14
+    // counter = GlobalState<uint64>({ initialValue: 0 })
+    bytec 4 // "counter"
+    // tests/approvals/time-travel.algo.ts:35
+    // const then = this.counter.value
+    app_global_get_ex
+    assert // check GlobalState exists
+    // tests/approvals/time-travel.algo.ts:36
+    // op.TimeTravel.seek(home)
+    uncover 1
+    tt_seek
+    // tests/approvals/time-travel.algo.ts:37
+    // return [then, now]
+    itob
+    bytec_3 // 0x
+    uncover 1
+    concat
+    uncover 1
+    itob
+    concat
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.dataChanged(rnd: uint64) -> uint64:
+tests/approvals/time-travel.algo.ts::TimeTravelContract.dataChanged:
+    // tests/approvals/time-travel.algo.ts:40
+    // dataChanged(rnd: uint64): boolean {
+    proto 1 1
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.dataChanged_block@0
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.dataChanged_block@0:
+    // tests/approvals/time-travel.algo.ts:15
+    // data = Box<bytes>({ key: 'data' })
+    bytec_1 // "data"
+    // tests/approvals/time-travel.algo.ts:41
+    // const now = this.data.value
+    box_get
+    assert // Box must have value
+    // tests/approvals/time-travel.algo.ts:42
+    // op.TimeTravel.seek(rnd)
+    frame_dig -1
+    tt_seek
+    // tests/approvals/time-travel.algo.ts:15
+    // data = Box<bytes>({ key: 'data' })
+    bytec_1 // "data"
+    // tests/approvals/time-travel.algo.ts:43
+    // const then = this.data.value
+    box_get
+    assert // Box must have value
+    cover 1
+    // tests/approvals/time-travel.algo.ts:44
+    // return now.slice(0, 8) !== then.slice(0, 8)
+    dup
+    len
+    intc_1 // 0
+    dig 1
+    >=
+    intc_1 // 0
+    dig 2
+    uncover 2
+    select
+    cover 1
+    intc_0 // 8
+    dig 1
+    >=
+    intc_0 // 8
+    uncover 2
+    uncover 2
+    select
+    uncover 2
+    uncover 2
+    uncover 2
+    substring3
+    cover 1
+    dup
+    len
+    intc_1 // 0
+    dig 1
+    >=
+    intc_1 // 0
+    dig 2
+    uncover 2
+    select
+    cover 1
+    intc_0 // 8
+    dig 1
+    >=
+    intc_0 // 8
+    uncover 2
+    uncover 2
+    select
+    uncover 2
+    uncover 2
+    uncover 2
+    substring3
+    !=
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.firstItemChanged(rnd: uint64) -> uint64:
+tests/approvals/time-travel.algo.ts::TimeTravelContract.firstItemChanged:
+    // tests/approvals/time-travel.algo.ts:47
+    // firstItemChanged(rnd: uint64): boolean {
+    proto 1 1
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.firstItemChanged_block@0
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.firstItemChanged_block@0:
+    // tests/approvals/time-travel.algo.ts:16
+    // items = Box<uint64[]>({ key: 'items' })
+    bytec_2 // "items"
+    // tests/approvals/time-travel.algo.ts:48
+    // const now = clone(this.items.value)
+    box_get
+    assert // Box must have value
+    // tests/approvals/time-travel.algo.ts:49
+    // goBack(rnd)
+    frame_dig -1
+    callsub goBack
+    // tests/approvals/time-travel.algo.ts:16
+    // items = Box<uint64[]>({ key: 'items' })
+    bytec_2 // "items"
+    // tests/approvals/time-travel.algo.ts:50
+    // const then = clone(this.items.value)
+    box_get
+    assert // Box must have value
+    cover 1
+    // tests/approvals/time-travel.algo.ts:51
+    // return now[0] !== then[0]
+    dup
+    len
+    cover 1
+    intc_3 // 2
+    uncover 2
+    substring3
+    intc_1 // 0
+    intc_0 // 8
+    *
+    intc_0 // 8
+    extract3 // on error: index access is out of bounds
+    btoi
+    cover 1
+    dup
+    len
+    cover 1
+    intc_3 // 2
+    uncover 2
+    substring3
+    intc_1 // 0
+    intc_0 // 8
+    *
+    intc_0 // 8
+    extract3 // on error: index access is out of bounds
+    btoi
+    !=
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.firstItemNow(rnd: uint64) -> uint64:
+tests/approvals/time-travel.algo.ts::TimeTravelContract.firstItemNow:
+    // tests/approvals/time-travel.algo.ts:54
+    // firstItemNow(rnd: uint64): uint64 {
+    proto 1 1
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.firstItemNow_block@0
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.firstItemNow_block@0:
+    // tests/approvals/time-travel.algo.ts:55
+    // const first = this.items.value[0]
+    intc_1 // 0
+    intc_3 // 2
+    +
+    intc_1 // 0
+    intc_0 // 8
+    *
+    +
+    // tests/approvals/time-travel.algo.ts:16
+    // items = Box<uint64[]>({ key: 'items' })
+    bytec_2 // "items"
+    // tests/approvals/time-travel.algo.ts:55
+    // const first = this.items.value[0]
+    uncover 1
+    intc_0 // 8
+    box_extract // on error: index out of bounds
+    btoi
+    // tests/approvals/time-travel.algo.ts:56
+    // op.TimeTravel.seek(rnd)
+    frame_dig -1
+    tt_seek
+    // tests/approvals/time-travel.algo.ts:57
+    // return first
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack(rnd: uint64, x: uint64) -> void:
+tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack:
+    // tests/approvals/time-travel.algo.ts:60
+    // appendThenWriteBack(rnd: uint64, x: uint64): void {
+    proto 2 0
+    intc_1 // 0
+    intc_1 // 0
+    bytec_3 // ""
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack_block@0
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack_block@0:
+    // tests/approvals/time-travel.algo.ts:16
+    // items = Box<uint64[]>({ key: 'items' })
+    bytec_2 // "items"
+    // tests/approvals/time-travel.algo.ts:61
+    // const items = clone(this.items.value)
+    box_get
+    assert // Box must have value
+    // tests/approvals/time-travel.algo.ts:62
+    // items.push(x)
+    frame_dig -1
+    itob
+    bytec_3 // 0x
+    uncover 1
+    concat
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack_block@1
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack_block@1:
+    frame_dig 3
+    intc_1 // 0
+    extract_uint16
+    // tests/approvals/time-travel.algo.ts:62
+    // items.push(x)
+    intc_2 // 1
+    +
+    frame_bury 2
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack_block@2
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack_block@2:
+    frame_dig 2
+    itob
+    extract 6 0
+    frame_bury 1
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack_after_inlined__puya_lib.arc4._itob16@3
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack_after_inlined__puya_lib.arc4._itob16@3:
+    frame_dig 1
+    frame_dig 3
+    intc_1 // 0
+    uncover 2
+    replace3
+    frame_dig 4
+    concat
+    frame_bury 0
+    // tests/approvals/time-travel.algo.ts:62
+    // items.push(x)
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack_after_inlined__puya_lib.arc4.dynamic_array_concat_fixed@4
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.appendThenWriteBack_after_inlined__puya_lib.arc4.dynamic_array_concat_fixed@4:
+    // tests/approvals/time-travel.algo.ts:62
+    // items.push(x)
+    frame_dig 0
+    // tests/approvals/time-travel.algo.ts:63
+    // op.TimeTravel.seek(rnd)
+    frame_dig -2
+    tt_seek
+    // tests/approvals/time-travel.algo.ts:16
+    // items = Box<uint64[]>({ key: 'items' })
+    bytec_2 // "items"
+    // tests/approvals/time-travel.algo.ts:64
+    // this.items.value = clone(items)
+    box_del
+    pop
+    // tests/approvals/time-travel.algo.ts:16
+    // items = Box<uint64[]>({ key: 'items' })
+    bytec_2 // "items"
+    // tests/approvals/time-travel.algo.ts:64
+    // this.items.value = clone(items)
+    uncover 1
+    box_put
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.setThenWriteBack(rnd: uint64, x: uint64) -> void:
+tests/approvals/time-travel.algo.ts::TimeTravelContract.setThenWriteBack:
+    // tests/approvals/time-travel.algo.ts:67
+    // setThenWriteBack(rnd: uint64, x: uint64): void {
+    proto 2 0
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.setThenWriteBack_block@0
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.setThenWriteBack_block@0:
+    // tests/approvals/time-travel.algo.ts:17
+    // point = Box<Point>({ key: 'pt' })
+    bytec 6 // "pt"
+    // tests/approvals/time-travel.algo.ts:68
+    // const point = clone(this.point.value)
+    box_get
+    assert // Box must have value
+    // tests/approvals/time-travel.algo.ts:69
+    // point.a = x
+    frame_dig -1
+    itob
+    uncover 1
+    intc_1 // 0
+    uncover 2
+    replace3
+    // tests/approvals/time-travel.algo.ts:70
+    // op.TimeTravel.seek(rnd)
+    frame_dig -2
+    tt_seek
+    // tests/approvals/time-travel.algo.ts:17
+    // point = Box<Point>({ key: 'pt' })
+    bytec 6 // "pt"
+    // tests/approvals/time-travel.algo.ts:71
+    // this.point.value = clone(point)
+    uncover 1
+    box_put
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.timestamps(rnd: uint64, of: uint64) -> uint64:
+tests/approvals/time-travel.algo.ts::TimeTravelContract.timestamps:
+    // tests/approvals/time-travel.algo.ts:74
+    // timestamps(rnd: uint64, of: uint64): uint64 {
+    proto 2 1
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.timestamps_block@0
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.timestamps_block@0:
+    // tests/approvals/time-travel.algo.ts:75
+    // const now = op.Block.blkTimestamp(of)
+    frame_dig -1
+    block BlkTimestamp
+    // tests/approvals/time-travel.algo.ts:76
+    // op.TimeTravel.seek(rnd)
+    frame_dig -2
+    tt_seek
+    // tests/approvals/time-travel.algo.ts:77
+    // const then = op.Block.blkTimestamp(of)
+    frame_dig -1
+    block BlkTimestamp
+    // tests/approvals/time-travel.algo.ts:78
+    // return now + then
+    +
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.dataExisted(rnd: uint64) -> bytes:
+tests/approvals/time-travel.algo.ts::TimeTravelContract.dataExisted:
+    // tests/approvals/time-travel.algo.ts:81
+    // dataExisted(rnd: uint64): bytes {
+    proto 1 1
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.dataExisted_block@0
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.dataExisted_block@0:
+    // tests/approvals/time-travel.algo.ts:15
+    // data = Box<bytes>({ key: 'data' })
+    bytec_1 // "data"
+    // tests/approvals/time-travel.algo.ts:82
+    // const existed = this.data.exists
+    box_len
+    // tests/approvals/time-travel.algo.ts:83
+    // op.TimeTravel.seek(rnd)
+    frame_dig -1
+    tt_seek
+    // tests/approvals/time-travel.algo.ts:15
+    // data = Box<bytes>({ key: 'data' })
+    bytec_1 // "data"
+    // tests/approvals/time-travel.algo.ts:84
+    // const then = this.data.value
+    box_get
+    assert // Box must have value
+    // tests/approvals/time-travel.algo.ts:85
+    // assert(existed)
+    uncover 1
+    assert
+    // tests/approvals/time-travel.algo.ts:86
+    // return then
+    uncover 1
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.dataExistsThen(rnd: uint64) -> uint64:
+tests/approvals/time-travel.algo.ts::TimeTravelContract.dataExistsThen:
+    // tests/approvals/time-travel.algo.ts:89
+    // dataExistsThen(rnd: uint64): boolean {
+    proto 1 1
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.dataExistsThen_block@0
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.dataExistsThen_block@0:
+    // tests/approvals/time-travel.algo.ts:15
+    // data = Box<bytes>({ key: 'data' })
+    bytec_1 // "data"
+    // tests/approvals/time-travel.algo.ts:90
+    // assert(this.data.length)
+    box_len
+    assert // Box must have value
+    assert
+    // tests/approvals/time-travel.algo.ts:91
+    // op.TimeTravel.seek(rnd)
+    frame_dig -1
+    tt_seek
+    // tests/approvals/time-travel.algo.ts:15
+    // data = Box<bytes>({ key: 'data' })
+    bytec_1 // "data"
+    // tests/approvals/time-travel.algo.ts:92
+    // return this.data.exists
+    box_len
+    uncover 1
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.changes(acct: bytes, asset: uint64, app: uint64, from: uint64, to: uint64) -> uint64:
+tests/approvals/time-travel.algo.ts::TimeTravelContract.changes:
+    // tests/approvals/time-travel.algo.ts:95
+    // changes(acct: Account, asset: Asset, app: Application, from: uint64, to: uint64): uint64 {
+    proto 5 1
+    intc_1 // 0
+    bytec_3 // ""
+    bytec_3 // ""
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_block@0
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_block@0:
+    // tests/approvals/time-travel.algo.ts:97
+    // let [rnd, status] = op.TimeTravel.acctChange(acct, from, to)
+    frame_dig -5
+    frame_dig -2
+    frame_dig -1
+    tt_acct_change
+    // tests/approvals/time-travel.algo.ts:98
+    // total += rnd + status
+    +
+    // tests/approvals/time-travel.algo.ts:96
+    // let total: uint64 = 0
+    intc_1 // 0
+    // tests/approvals/time-travel.algo.ts:98
+    // total += rnd + status
+    +
+    // tests/approvals/time-travel.algo.ts:99
+    // ;[rnd, status] = op.TimeTravel.holdingChange(acct, asset, from, to)
+    frame_dig -5
+    frame_dig -4
+    frame_dig -2
+    frame_dig -1
+    tt_holding_change
+    // tests/approvals/time-travel.algo.ts:100
+    // total += rnd + status
+    +
+    +
+    // tests/approvals/time-travel.algo.ts:101
+    // ;[rnd, status] = op.TimeTravel.localChange(acct, app, from, to)
+    frame_dig -5
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    tt_local_change
+    // tests/approvals/time-travel.algo.ts:102
+    // total += rnd + status
+    +
+    +
+    // tests/approvals/time-travel.algo.ts:103
+    // ;[rnd, status] = op.TimeTravel.assetChange(asset, from, to)
+    frame_dig -4
+    frame_dig -2
+    frame_dig -1
+    tt_asset_change
+    // tests/approvals/time-travel.algo.ts:104
+    // total += rnd + status
+    +
+    +
+    // tests/approvals/time-travel.algo.ts:105
+    // ;[rnd, status] = op.TimeTravel.appChange(app, from, to)
+    frame_dig -3
+    frame_dig -2
+    frame_dig -1
+    tt_app_change
+    // tests/approvals/time-travel.algo.ts:106
+    // total += rnd + status
+    +
+    +
+    // tests/approvals/time-travel.algo.ts:107
+    // ;[rnd, status] = op.TimeTravel.boxChange(app, Bytes('data'), from, to)
+    frame_dig -3
+    bytec_1 // "data"
+    frame_dig -2
+    frame_dig -1
+    tt_box_change
+    // tests/approvals/time-travel.algo.ts:108
+    // total += rnd + status
+    +
+    +
+    // tests/approvals/time-travel.algo.ts:109
+    // const [gRnd, gStatus, gValue] = op.TimeTravel.globalKeyChangeUint64(app, Bytes('counter'), from, to)
+    frame_dig -3
+    bytec 4 // "counter"
+    frame_dig -2
+    frame_dig -1
+    tt_global_key_change
+    cover 2
+    // tests/approvals/time-travel.algo.ts:110
+    // total += gRnd + gStatus + gValue
+    +
+    +
+    +
+    // tests/approvals/time-travel.algo.ts:111
+    // const [nRnd, nStatus, nName] = op.TimeTravel.globalKeyChangeBytes(app, Bytes('name'), from, to)
+    frame_dig -3
+    pushbytes "name"
+    frame_dig -2
+    frame_dig -1
+    tt_global_key_change
+    cover 2
+    dup
+    cover 4
+    uncover 2
+    cover 3
+    // tests/approvals/time-travel.algo.ts:112
+    // total += nRnd + nStatus
+    uncover 1
+    dig 1
+    +
+    uncover 2
+    +
+    cover 1
+    // tests/approvals/time-travel.algo.ts:114
+    // if (nStatus === 1 || nStatus === 2) total += nName.length
+    intc_2 // 1
+    ==
+    bnz tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_if_body@2
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_or_contd@1
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_or_contd@1:
+    // tests/approvals/time-travel.algo.ts:114
+    // if (nStatus === 1 || nStatus === 2) total += nName.length
+    frame_dig 3
+    intc_3 // 2
+    ==
+    frame_dig 5
+    frame_bury 2
+    bz tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_after_if_else@3
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_if_body@2
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_if_body@2:
+    // tests/approvals/time-travel.algo.ts:114
+    // if (nStatus === 1 || nStatus === 2) total += nName.length
+    frame_dig 4
+    len
+    frame_dig 5
+    +
+    frame_bury 2
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_after_if_else@3
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_after_if_else@3:
+    // tests/approvals/time-travel.algo.ts:115
+    // const [lRnd, lStatus, lValue] = op.TimeTravel.localKeyChangeUint64(acct, app, Bytes('n'), from, to)
+    frame_dig -5
+    frame_dig -3
+    pushbytes "n"
+    frame_dig -2
+    frame_dig -1
+    tt_local_key_change
+    cover 2
+    // tests/approvals/time-travel.algo.ts:116
+    // total += lRnd + lStatus + lValue
+    +
+    +
+    frame_dig 2
+    +
+    // tests/approvals/time-travel.algo.ts:117
+    // const [sRnd, sStatus, sValue] = op.TimeTravel.localKeyChangeBytes(acct, app, Bytes('s'), from, to)
+    frame_dig -5
+    frame_dig -3
+    pushbytes "s"
+    frame_dig -2
+    frame_dig -1
+    tt_local_key_change
+    cover 2
+    dup
+    frame_bury 1
+    uncover 2
+    frame_bury 0
+    // tests/approvals/time-travel.algo.ts:118
+    // total += sRnd + sStatus
+    uncover 1
+    dig 1
+    +
+    uncover 2
+    +
+    frame_bury 5
+    // tests/approvals/time-travel.algo.ts:120
+    // if (sStatus === 1 || sStatus === 2) total += sValue.length
+    intc_2 // 1
+    ==
+    bnz tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_if_body@5
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_or_contd@4
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_or_contd@4:
+    // tests/approvals/time-travel.algo.ts:120
+    // if (sStatus === 1 || sStatus === 2) total += sValue.length
+    frame_dig 1
+    intc_3 // 2
+    ==
+    frame_dig 5
+    frame_bury 2
+    bz tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_after_if_else@6
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_if_body@5
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_if_body@5:
+    // tests/approvals/time-travel.algo.ts:120
+    // if (sStatus === 1 || sStatus === 2) total += sValue.length
+    frame_dig 0
+    len
+    frame_dig 5
+    +
+    frame_bury 2
+    b tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_after_if_else@6
+
+tests/approvals/time-travel.algo.ts::TimeTravelContract.changes_after_if_else@6:
+    // tests/approvals/time-travel.algo.ts:121
+    // const [pRnd, pStatus, pName] = op.TimeTravel.boxPrefixChange(app, Bytes('it'), from, to)
+    frame_dig -3
+    pushbytes "it"
+    frame_dig -2
+    frame_dig -1
+    tt_box_prefix_change
+    cover 2
+    // tests/approvals/time-travel.algo.ts:122
+    // total += pRnd + pStatus + pName.length
+    +
+    uncover 1
+    len
+    +
+    frame_dig 2
+    +
+    // tests/approvals/time-travel.algo.ts:123
+    // return total
+    frame_bury 0
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.__algots__.defaultCreate() -> void:
+__algots__.defaultCreate:
+    b __algots__.defaultCreate_block@0
+
+__algots__.defaultCreate_block@0:
+    retsub
+
+
+// tests/approvals/time-travel.algo.ts::TimeTravelContract.constructor() -> void:
+constructor:
+    b constructor_block@0
+
+constructor_block@0:
+    // tests/approvals/time-travel.algo.ts:12-13
+    // @contract({ name: 'TimeTravelContract', avmVersion: 13 })
+    // export class TimeTravelContract extends Contract {
+    b constructor_block@1
+
+constructor_block@1:
+    // tests/approvals/time-travel.algo.ts:12-13
+    // @contract({ name: 'TimeTravelContract', avmVersion: 13 })
+    // export class TimeTravelContract extends Contract {
+    b constructor_after_inlined_@algorandfoundation/algorand-typescript/base-contract.d.ts::BaseContract.constructor@2
+
+constructor_after_inlined_@algorandfoundation/algorand-typescript/base-contract.d.ts::BaseContract.constructor@2:
+    // tests/approvals/time-travel.algo.ts:14
+    // counter = GlobalState<uint64>({ initialValue: 0 })
+    bytec 4 // "counter"
+    intc_1 // 0
+    app_global_put
+    retsub

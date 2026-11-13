@@ -1,9 +1,10 @@
 # dt-puya-ts
 
-> `@d13co/dt-puya-ts` and `@d13co/dt-algorand-typescript` are a fork of [puya-ts](https://github.com/algorandfoundation/puya-ts) 1.3.1, the Algorand TypeScript compiler, and its types, for [dt-algorand](https://github.com/d13co/dt-algorand/tree/dtalgorand), the time-travel fork of go-algorand. The compiler runs [dt-puya](https://github.com/d13co/dt-puya), the matching fork of the puya backend. Everything else is upstream's. The upstream README follows below.
+> `@d13co/dt-puya-ts` and `@d13co/dt-algorand-typescript` are a fork of [puya-ts](https://github.com/algorandfoundation/puya-ts) 1.3.1, the Algorand TypeScript compiler, and its types, for [dt-algorand](https://github.com/d13co/dt-algorand/tree/dtalgorand), the time-travel fork of go-algorand, with its time-travel ops. The compiler runs [dt-puya](https://github.com/d13co/dt-puya), the matching fork of the puya backend. Everything else is upstream's. The upstream README follows below.
 
 ## dt-puya-ts: the main changes
 
+- **Time-travel ops**: `op.TimeTravel` has dt-algorand's `tt_seek`, which moves a program's reads to a past round, and the `tt_*_change` lookups, which find when an account, holding, local state, asset, app, box, state key or box name prefix changed. Programs run them through dt-algorand's `POST /v2/query`.
 - **dt-puya**: the compiler downloads the backend from [dt-puya 5.10.1-dt.1.0.0](https://github.com/d13co/dt-puya/releases/tag/v5.10.1-dt.1.0.0) in place of algorandfoundation/puya.
 
 See **[DTPUYATS.md](https://github.com/d13co/dt-puya-ts/blob/dtalgorand/DTPUYATS.md)** for the details, the versions and the release steps. Source and issues: [d13co/dt-puya-ts](https://github.com/d13co/dt-puya-ts) (branch `dtalgorand`).

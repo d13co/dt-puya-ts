@@ -4864,6 +4864,205 @@ export const OP_METADATA: Record<string, IntrinsicOpMapping | IntrinsicOpGroupin
       },
     ],
   },
+  TimeTravel: {
+    type: 'op-grouping',
+    name: 'TimeTravel',
+    ops: {
+      acctChange: {
+        type: 'op-mapping',
+        op: 'tt_acct_change',
+        signatures: [
+          {
+            argNames: ['a', 'b', 'c'],
+            immediateArgs: [],
+            stackArgs: [
+              { name: 'a', ptypes: [ptypes.accountPType] },
+              { name: 'b', ptypes: [ptypes.uint64PType] },
+              { name: 'c', ptypes: [ptypes.uint64PType] },
+            ],
+            returnType: new ptypes.ReadonlyTuplePType({ items: [ptypes.uint64PType, ptypes.uint64PType] }),
+          },
+        ],
+      },
+      appChange: {
+        type: 'op-mapping',
+        op: 'tt_app_change',
+        signatures: [
+          {
+            argNames: ['a', 'b', 'c'],
+            immediateArgs: [],
+            stackArgs: [
+              { name: 'a', ptypes: [ptypes.applicationPType, ptypes.uint64PType] },
+              { name: 'b', ptypes: [ptypes.uint64PType] },
+              { name: 'c', ptypes: [ptypes.uint64PType] },
+            ],
+            returnType: new ptypes.ReadonlyTuplePType({ items: [ptypes.uint64PType, ptypes.uint64PType] }),
+          },
+        ],
+      },
+      assetChange: {
+        type: 'op-mapping',
+        op: 'tt_asset_change',
+        signatures: [
+          {
+            argNames: ['a', 'b', 'c'],
+            immediateArgs: [],
+            stackArgs: [
+              { name: 'a', ptypes: [ptypes.assetPType, ptypes.uint64PType] },
+              { name: 'b', ptypes: [ptypes.uint64PType] },
+              { name: 'c', ptypes: [ptypes.uint64PType] },
+            ],
+            returnType: new ptypes.ReadonlyTuplePType({ items: [ptypes.uint64PType, ptypes.uint64PType] }),
+          },
+        ],
+      },
+      boxChange: {
+        type: 'op-mapping',
+        op: 'tt_box_change',
+        signatures: [
+          {
+            argNames: ['a', 'b', 'c', 'd'],
+            immediateArgs: [],
+            stackArgs: [
+              { name: 'a', ptypes: [ptypes.applicationPType, ptypes.uint64PType] },
+              { name: 'b', ptypes: [ptypes.bytesPType] },
+              { name: 'c', ptypes: [ptypes.uint64PType] },
+              { name: 'd', ptypes: [ptypes.uint64PType] },
+            ],
+            returnType: new ptypes.ReadonlyTuplePType({ items: [ptypes.uint64PType, ptypes.uint64PType] }),
+          },
+        ],
+      },
+      boxPrefixChange: {
+        type: 'op-mapping',
+        op: 'tt_box_prefix_change',
+        signatures: [
+          {
+            argNames: ['a', 'b', 'c', 'd'],
+            immediateArgs: [],
+            stackArgs: [
+              { name: 'a', ptypes: [ptypes.applicationPType, ptypes.uint64PType] },
+              { name: 'b', ptypes: [ptypes.bytesPType] },
+              { name: 'c', ptypes: [ptypes.uint64PType] },
+              { name: 'd', ptypes: [ptypes.uint64PType] },
+            ],
+            returnType: new ptypes.ReadonlyTuplePType({ items: [ptypes.uint64PType, ptypes.uint64PType, ptypes.bytesPType] }),
+          },
+        ],
+      },
+      globalKeyChangeBytes: {
+        type: 'op-mapping',
+        op: 'tt_global_key_change',
+        signatures: [
+          {
+            argNames: ['a', 'b', 'c', 'd'],
+            immediateArgs: [],
+            stackArgs: [
+              { name: 'a', ptypes: [ptypes.applicationPType, ptypes.uint64PType] },
+              { name: 'b', ptypes: [ptypes.bytesPType] },
+              { name: 'c', ptypes: [ptypes.uint64PType] },
+              { name: 'd', ptypes: [ptypes.uint64PType] },
+            ],
+            returnType: new ptypes.ReadonlyTuplePType({ items: [ptypes.uint64PType, ptypes.uint64PType, ptypes.bytesPType] }),
+          },
+        ],
+      },
+      globalKeyChangeUint64: {
+        type: 'op-mapping',
+        op: 'tt_global_key_change',
+        signatures: [
+          {
+            argNames: ['a', 'b', 'c', 'd'],
+            immediateArgs: [],
+            stackArgs: [
+              { name: 'a', ptypes: [ptypes.applicationPType, ptypes.uint64PType] },
+              { name: 'b', ptypes: [ptypes.bytesPType] },
+              { name: 'c', ptypes: [ptypes.uint64PType] },
+              { name: 'd', ptypes: [ptypes.uint64PType] },
+            ],
+            returnType: new ptypes.ReadonlyTuplePType({ items: [ptypes.uint64PType, ptypes.uint64PType, ptypes.uint64PType] }),
+          },
+        ],
+      },
+      holdingChange: {
+        type: 'op-mapping',
+        op: 'tt_holding_change',
+        signatures: [
+          {
+            argNames: ['a', 'b', 'c', 'd'],
+            immediateArgs: [],
+            stackArgs: [
+              { name: 'a', ptypes: [ptypes.accountPType] },
+              { name: 'b', ptypes: [ptypes.assetPType, ptypes.uint64PType] },
+              { name: 'c', ptypes: [ptypes.uint64PType] },
+              { name: 'd', ptypes: [ptypes.uint64PType] },
+            ],
+            returnType: new ptypes.ReadonlyTuplePType({ items: [ptypes.uint64PType, ptypes.uint64PType] }),
+          },
+        ],
+      },
+      localChange: {
+        type: 'op-mapping',
+        op: 'tt_local_change',
+        signatures: [
+          {
+            argNames: ['a', 'b', 'c', 'd'],
+            immediateArgs: [],
+            stackArgs: [
+              { name: 'a', ptypes: [ptypes.accountPType] },
+              { name: 'b', ptypes: [ptypes.applicationPType, ptypes.uint64PType] },
+              { name: 'c', ptypes: [ptypes.uint64PType] },
+              { name: 'd', ptypes: [ptypes.uint64PType] },
+            ],
+            returnType: new ptypes.ReadonlyTuplePType({ items: [ptypes.uint64PType, ptypes.uint64PType] }),
+          },
+        ],
+      },
+      localKeyChangeBytes: {
+        type: 'op-mapping',
+        op: 'tt_local_key_change',
+        signatures: [
+          {
+            argNames: ['a', 'b', 'c', 'd', 'e'],
+            immediateArgs: [],
+            stackArgs: [
+              { name: 'a', ptypes: [ptypes.accountPType] },
+              { name: 'b', ptypes: [ptypes.applicationPType, ptypes.uint64PType] },
+              { name: 'c', ptypes: [ptypes.bytesPType] },
+              { name: 'd', ptypes: [ptypes.uint64PType] },
+              { name: 'e', ptypes: [ptypes.uint64PType] },
+            ],
+            returnType: new ptypes.ReadonlyTuplePType({ items: [ptypes.uint64PType, ptypes.uint64PType, ptypes.bytesPType] }),
+          },
+        ],
+      },
+      localKeyChangeUint64: {
+        type: 'op-mapping',
+        op: 'tt_local_key_change',
+        signatures: [
+          {
+            argNames: ['a', 'b', 'c', 'd', 'e'],
+            immediateArgs: [],
+            stackArgs: [
+              { name: 'a', ptypes: [ptypes.accountPType] },
+              { name: 'b', ptypes: [ptypes.applicationPType, ptypes.uint64PType] },
+              { name: 'c', ptypes: [ptypes.bytesPType] },
+              { name: 'd', ptypes: [ptypes.uint64PType] },
+              { name: 'e', ptypes: [ptypes.uint64PType] },
+            ],
+            returnType: new ptypes.ReadonlyTuplePType({ items: [ptypes.uint64PType, ptypes.uint64PType, ptypes.uint64PType] }),
+          },
+        ],
+      },
+      seek: {
+        type: 'op-mapping',
+        op: 'tt_seek',
+        signatures: [
+          { argNames: ['a'], immediateArgs: [], stackArgs: [{ name: 'a', ptypes: [ptypes.uint64PType] }], returnType: ptypes.voidPType },
+        ],
+      },
+    },
+  },
   Txn: {
     type: 'op-grouping',
     name: 'Txn',

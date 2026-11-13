@@ -199,8 +199,20 @@ jobs:
           VERSION: ${{ steps.version.outputs.version }}
           GH_TOKEN: ${{ github.token }}
         run: |
+          files=("package/d13co-dt-puya-ts-$VERSION.tgz" "package/d13co-dt-algorand-typescript-$VERSION.tgz")
+          # A rerun, after a release whose upload failed, uploads the files it lacks, and replaces none
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            echo "::notice::The $GITHUB_REF_NAME release already exists"
+            have=$(gh release view "$GITHUB_REF_NAME" --json assets -q '.assets[].name')
+            missing=()
+            for file in "${files[@]}"; do
+              grep -qxF "$(basename "$file")" <<<"$have" || missing+=("$file")
+            done
+            if [ ${#missing[@]} -eq 0 ]; then
+              echo "::notice::The $GITHUB_REF_NAME release already exists, with its files"
+            else
+              echo "::notice::The $GITHUB_REF_NAME release already exists, uploading the files it lacks: ${missing[*]}"
+              gh release upload "$GITHUB_REF_NAME" "${missing[@]}"
+            fi
             exit 0
           fi
           {
@@ -213,7 +225,15 @@ jobs:
               git log --first-parent --format='- %s (%h)' "$prev..$GITHUB_REF_NAME"
             fi
           } > notes.md
-          gh release create "$GITHUB_REF_NAME" \
-            "package/d13co-dt-puya-ts-$VERSION.tgz" \
-            "package/d13co-dt-algorand-typescript-$VERSION.tgz" \
+          gh release create "$GITHUB_REF_NAME" "${files[@]}" \
             --verify-tag --latest --title "@d13co/dt-puya-ts $VERSION" --notes-file notes.md
+
+      - name: Check the release has both files
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          have=$(gh release view "$GITHUB_REF_NAME" --json assets -q '.assets[].name')
+          for name in "d13co-dt-puya-ts-$VERSION.tgz" "d13co-dt-algorand-typescript-$VERSION.tgz"; do
+            grep -qxF "$name" <<<"$have" || { echo "::error::The $GITHUB_REF_NAME release lacks $name"; exit 1; }
+          done
